@@ -104,6 +104,7 @@ const Lottie = memo(({
         animRef.current.resetSegments(force);
         animRef.current.play();
       }
+      animRef.current.setDirection(direction);
     } else if (play === false) {
       animRef.current.pause();
     }
