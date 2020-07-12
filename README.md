@@ -2,7 +2,7 @@
 
 > Fully declarative React Lottie player
 
-Inspired by [several](https://github.com/felippenardi/lottie-react-web) [existing](https://github.com/chenqingspring/react-lottie) [packages](https://github.com/Gamote/lottie-react) wrapping [lottie-web](https://github.com/airbnb/lottie-web) for React, I created this package because none of those alternatives properly handle changes of props like playing/pausing/segments. This lead to lots of hacks to get the animations to play correctly.
+Inspired by [several](https://github.com/felippenardi/lottie-react-web) [existing](https://github.com/chenqingspring/react-lottie) [packages](https://github.com/Gamote/lottie-react) wrapping [lottie-web](https://github.com/airbnb/lottie-web) for React, I created this package because I wanted something that just works and is simple to use. None of the alternatives properly handle changes of props like playing/pausing/segments. This lead to lots of hacks to get the animations to play correctly.
 
 `react-lottie-player` is a complete rewrite using modern hooks 🎣 for more readable code, an easy to use, seamless and **fully declarative control of the lottie player**.
 
