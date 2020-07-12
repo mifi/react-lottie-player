@@ -36,12 +36,19 @@ class Example extends Component {
 }
 ```
 
-## Live example
+## Example
 
+[![](screenshot.png)](https://mifi.github.io/react-lottie-player/)
+
+[Open live example](https://mifi.github.io/react-lottie-player/)
+
+[View example code](https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js)
 
 ## API
 
 See https://github.com/airbnb/lottie-web
+
+[View PropTypes](https://github.com/mifi/react-lottie-player/blob/af42ad34da384483cce539af978f9fb89cfa6e41/src/index.js#L141)
 
 ## Credits
 
