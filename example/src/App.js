@@ -12,12 +12,27 @@ const MainTest = memo(() => {
   const [segmentsEnabled, setSegmentsEnabled] = useState(false);
   const [play, setPlay] = useState(true);
   const [loop, setLoop] = useState(true);
+  const [loopTimes, setLoopTimes] = useState(0);
   const [speed, setSpeed] = useState(1);
   const [direction, setDirection] = useState(1);
   const segments = [segmentFrom, segmentTo];
 
   const [log, setLog] = useState([]);
   const addLog = (v) => setLog(l => [v, ...l]);
+
+  function handleLoopTimesChange(e) {
+    const { value } = e.target;
+    setLoopTimes(value);
+    const n = parseInt(value, 10);
+    if (!Number.isInteger(n)) return;
+    setLoop(n);
+  }
+
+  function getLoopVal() {
+    if (loop === true) return '';
+    if (loop === false) return 0;
+    return loopTimes;
+  }
 
   return (
     <div style={boxStyle}>
@@ -36,6 +51,12 @@ const MainTest = memo(() => {
       />
 
       <div style={{ margin: '7px 0' }}><input type="checkbox" checked={loop} onChange={e => setLoop(e.target.checked)} id="loop" /> <label htmlFor="loop">Loop</label></div>
+
+      <div style={{ margin: '7px 0' }}>
+        Loop times<br />
+        <input type="number" value={getLoopVal()} onChange={handleLoopTimesChange} />
+      </div>
+
 
       <div style={{ margin: '7px 0' }}><input type="checkbox" checked={play} onChange={e => setPlay(e.target.checked)} id="playing1" /> <label htmlFor="playing1">Playing</label></div>
 

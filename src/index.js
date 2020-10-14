@@ -146,7 +146,7 @@ Lottie.propTypes = {
   goTo: PropTypes.number,
   speed: PropTypes.number,
   direction: PropTypes.number,
-  loop: PropTypes.bool,
+  loop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
 
   segments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.bool]),
 
