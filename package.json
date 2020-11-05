@@ -11,6 +11,7 @@
   "engines": {
     "node": ">=10"
   },
+  "types": "types/react-lottie-player.d.ts",
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
