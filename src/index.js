@@ -150,8 +150,6 @@ Lottie.propTypes = {
 
   segments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.bool]),
 
-  props: PropTypes.object,
-
   rendererSettings: PropTypes.object,
 
   renderer: PropTypes.string,
@@ -170,8 +168,6 @@ Lottie.defaultProps = {
   speed: 1,
   direction: 1,
   loop: true,
-
-  props: {},
 
   rendererSettings: {},
   renderer: 'svg',
