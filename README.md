@@ -1,6 +1,6 @@
-# react-lottie-player
+![](https://github.com/mifi/gifs/raw/master/react-lottie-player.gif)
 
-> Fully declarative React Lottie player
+Fully declarative React Lottie player
 
 Inspired by [several](https://github.com/felippenardi/lottie-react-web) [existing](https://github.com/chenqingspring/react-lottie) [packages](https://github.com/Gamote/lottie-react) wrapping [lottie-web](https://github.com/airbnb/lottie-web) for React, I created this package because I wanted something that just works and is simple to use. None of the alternatives properly handle changes of props like playing/pausing/segments. This lead to lots of hacks to get the animations to play correctly.
 
@@ -53,6 +53,7 @@ See https://github.com/airbnb/lottie-web
 ## Credits
 
 - https://lottiefiles.com/26514-check-success-animation
+- https://lottiefiles.com/38726-stagger-rainbow
 - Published with [create-react-library](https://github.com/transitive-bullshit/create-react-library) 😎
 
 ## License
