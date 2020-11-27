@@ -1,143 +1,162 @@
-import React, { memo, useRef, useEffect, useState } from 'react';
-import lottie from 'lottie-web';
-import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
+import React, { memo, useRef, useEffect, useState } from 'react'
+import lottie from 'lottie-web'
+import PropTypes from 'prop-types'
+import isEqual from 'lodash/isEqual'
 
-const Lottie = memo(({
-  animationData,
+const Lottie = memo(
+  ({
+    animationData,
 
-  play,
-  speed,
-  direction,
-  segments: segmentsIn,
-  goTo,
+    play,
+    speed,
+    direction,
+    segments: segmentsIn,
+    goTo,
 
-  renderer,
-  loop,
-  rendererSettings: rendererSettingsIn,
+    renderer,
+    loop,
+    rendererSettings: rendererSettingsIn,
 
-  onComplete,
-  onLoopComplete,
-  onEnterFrame,
-  onSegmentStart,
+    audioFactory,
 
-  ...props
-}) => {
-  const animElementRef = useRef();
-  const animRef = useRef();
+    onComplete,
+    onLoopComplete,
+    onEnterFrame,
+    onSegmentStart,
 
-  const [ready, setReady] = useState(false);
+    ...props
+  }) => {
+    const animElementRef = useRef()
+    const animRef = useRef()
 
-  const [segments, setSegments] = useState(segmentsIn);
+    const [ready, setReady] = useState(false)
 
-  // Prevent re-init
-  useEffect(() => {
-    if (!isEqual(segments, segmentsIn)) setSegments(segmentsIn);
-  }, [segmentsIn, segments]);
+    const [segments, setSegments] = useState(segmentsIn)
 
-  const [rendererSettings, setRendererSettings] = useState(rendererSettingsIn);
+    // Prevent re-init
+    useEffect(() => {
+      if (!isEqual(segments, segmentsIn)) setSegments(segmentsIn)
+    }, [segmentsIn, segments])
 
-  // Prevent re-init
-  useEffect(() => {
-    if (!isEqual(rendererSettings, rendererSettingsIn)) setRendererSettings(rendererSettingsIn);
-  }, [rendererSettingsIn, rendererSettings]);
+    const [rendererSettings, setRendererSettings] = useState(rendererSettingsIn)
 
+    // Prevent re-init
+    useEffect(() => {
+      if (!isEqual(rendererSettings, rendererSettingsIn))
+        setRendererSettings(rendererSettingsIn)
+    }, [rendererSettingsIn, rendererSettings])
 
-  // In order to remove listeners before animRef gets destroyed:
-  useEffect(() => () => animRef.current.removeEventListener('complete', onComplete), [onComplete]);
-  useEffect(() => () => animRef.current.removeEventListener('loopComplete', onLoopComplete), [onLoopComplete]);
-  useEffect(() => () => animRef.current.removeEventListener('enterFrame', onEnterFrame), [onEnterFrame]);
-  useEffect(() => () => animRef.current.removeEventListener('segmentStart', onSegmentStart), [onSegmentStart]);
+    // In order to remove listeners before animRef gets destroyed:
+    useEffect(
+      () => () => animRef.current.removeEventListener('complete', onComplete),
+      [onComplete]
+    )
+    useEffect(
+      () => () =>
+        animRef.current.removeEventListener('loopComplete', onLoopComplete),
+      [onLoopComplete]
+    )
+    useEffect(
+      () => () =>
+        animRef.current.removeEventListener('enterFrame', onEnterFrame),
+      [onEnterFrame]
+    )
+    useEffect(
+      () => () =>
+        animRef.current.removeEventListener('segmentStart', onSegmentStart),
+      [onSegmentStart]
+    )
 
-  useEffect(() => {
-    // console.log('init')
-    animRef.current = lottie.loadAnimation({
-      animationData,
-      container: animElementRef.current,
-      renderer,
-      loop: false,
-      autoplay: false, // We want to explicitly control playback
-      rendererSettings,
-    });
+    useEffect(() => {
+      // console.log('init')
+      animRef.current = lottie.loadAnimation({
+        animationData,
+        container: animElementRef.current,
+        renderer,
+        loop: false,
+        autoplay: false, // We want to explicitly control playback
+        rendererSettings,
+        audioFactory
+      })
 
-    const onReady = () => setReady(true);
-    animRef.current.addEventListener('DOMLoaded', onReady);
+      const onReady = () => setReady(true)
+      animRef.current.addEventListener('DOMLoaded', onReady)
 
-    return () => {
-      animRef.current.removeEventListener('DOMLoaded', onReady);
-      setReady(false);
-      animRef.current.destroy();
-      animRef.current = undefined;
-    };
-  }, [loop, renderer, rendererSettings, animationData]);
-
-  useEffect(() => {
-    animRef.current.addEventListener('complete', onComplete);
-  }, [onComplete]);
-
-  useEffect(() => {
-    animRef.current.addEventListener('loopComplete', onLoopComplete);
-  }, [onLoopComplete]);
-
-  useEffect(() => {
-    animRef.current.addEventListener('enterFrame', onEnterFrame);
-  }, [onEnterFrame]);
-
-  useEffect(() => {
-    animRef.current.addEventListener('segmentStart', onSegmentStart);
-  }, [onSegmentStart]);
-
-  useEffect(() => {
-    if (!ready) return;
-    animRef.current.loop = loop;
-  }, [ready, loop]);
-
-  useEffect(() => {
-    if (!ready) return;
-
-    if (play === true) {
-      const force = true;
-      if (segments) {
-        animRef.current.playSegments(segments, force);
-      } else {
-        // https://github.com/airbnb/lottie-web/blob/master/index.d.ts
-        animRef.current.resetSegments(force);
-        animRef.current.play();
+      return () => {
+        animRef.current.removeEventListener('DOMLoaded', onReady)
+        setReady(false)
+        animRef.current.destroy()
+        animRef.current = undefined
       }
-      animRef.current.setDirection(direction);
-    } else if (play === false) {
-      animRef.current.pause();
-    }
-  }, [play, segments, ready]);
+    }, [loop, renderer, rendererSettings, animationData])
 
-  useEffect(() => {
-    if (!ready) return;
-    if (Number.isNaN(speed)) return;
-    animRef.current.setSpeed(speed);
-  }, [speed, ready]);
+    useEffect(() => {
+      animRef.current.addEventListener('complete', onComplete)
+    }, [onComplete])
 
-  useEffect(() => {
-    if (!ready) return;
-    animRef.current.setDirection(direction);
-  }, [direction, ready]);
+    useEffect(() => {
+      animRef.current.addEventListener('loopComplete', onLoopComplete)
+    }, [onLoopComplete])
 
-  useEffect(() => {
-    if (!ready) return;
-    if (goTo == null) return;
-    const isFrame = true; // TODO
-    if (play) animRef.current.goToAndPlay(goTo, isFrame);
-    else animRef.current.goToAndStop(goTo, isFrame);
-  }, [goTo, play, ready]);
+    useEffect(() => {
+      animRef.current.addEventListener('enterFrame', onEnterFrame)
+    }, [onEnterFrame])
 
-  return (
-    <div
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-      ref={animElementRef}
-    />
-  );
-});
+    useEffect(() => {
+      animRef.current.addEventListener('segmentStart', onSegmentStart)
+    }, [onSegmentStart])
 
+    useEffect(() => {
+      if (!ready) return
+      animRef.current.loop = loop
+    }, [ready, loop])
+
+    useEffect(() => {
+      if (!ready) return
+
+      if (play === true) {
+        const force = true
+        if (segments) {
+          animRef.current.playSegments(segments, force)
+        } else {
+          // https://github.com/airbnb/lottie-web/blob/master/index.d.ts
+          animRef.current.resetSegments(force)
+          animRef.current.play()
+        }
+        animRef.current.setDirection(direction)
+      } else if (play === false) {
+        animRef.current.pause()
+      }
+    }, [play, segments, ready])
+
+    useEffect(() => {
+      if (!ready) return
+      if (Number.isNaN(speed)) return
+      animRef.current.setSpeed(speed)
+    }, [speed, ready])
+
+    useEffect(() => {
+      if (!ready) return
+      animRef.current.setDirection(direction)
+    }, [direction, ready])
+
+    useEffect(() => {
+      if (!ready) return
+      if (goTo == null) return
+      const isFrame = true // TODO
+      if (play) animRef.current.goToAndPlay(goTo, isFrame)
+      else animRef.current.goToAndStop(goTo, isFrame)
+    }, [goTo, play, ready])
+
+    return (
+      <div
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+        ref={animElementRef}
+      />
+    )
+  }
+)
 
 Lottie.propTypes = {
   animationData: PropTypes.object.isRequired,
@@ -148,17 +167,22 @@ Lottie.propTypes = {
   direction: PropTypes.number,
   loop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
 
-  segments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.bool]),
+  segments: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.bool
+  ]),
 
   rendererSettings: PropTypes.object,
 
   renderer: PropTypes.string,
 
+  audioFactory: PropTypes.func,
+
   onComplete: PropTypes.func,
   onLoopComplete: PropTypes.func,
   onEnterFrame: PropTypes.func,
-  onSegmentStart: PropTypes.func,
-};
+  onSegmentStart: PropTypes.func
+}
 
 Lottie.defaultProps = {
   play: null,
@@ -172,10 +196,12 @@ Lottie.defaultProps = {
   rendererSettings: {},
   renderer: 'svg',
 
+  audioFactory: () => {},
+
   onComplete: () => {},
   onLoopComplete: () => {},
   onEnterFrame: () => {},
-  onSegmentStart: () => {},
-};
+  onSegmentStart: () => {}
+}
 
-export default Lottie;
+export default Lottie
