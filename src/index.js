@@ -16,6 +16,8 @@ const Lottie = memo(({
   loop,
   rendererSettings: rendererSettingsIn,
 
+  audioFactory,
+
   onComplete,
   onLoopComplete,
   onEnterFrame,
@@ -58,6 +60,7 @@ const Lottie = memo(({
       loop: false,
       autoplay: false, // We want to explicitly control playback
       rendererSettings,
+      audioFactory,
     });
 
     const onReady = () => setReady(true);
@@ -69,7 +72,7 @@ const Lottie = memo(({
       animRef.current.destroy();
       animRef.current = undefined;
     };
-  }, [loop, renderer, rendererSettings, animationData]);
+  }, [loop, renderer, rendererSettings, animationData, audioFactory]);
 
   useEffect(() => {
     animRef.current.addEventListener('complete', onComplete);
@@ -154,6 +157,8 @@ Lottie.propTypes = {
 
   renderer: PropTypes.string,
 
+  audioFactory: PropTypes.func,
+
   onComplete: PropTypes.func,
   onLoopComplete: PropTypes.func,
   onEnterFrame: PropTypes.func,
@@ -171,6 +176,8 @@ Lottie.defaultProps = {
 
   rendererSettings: {},
   renderer: 'svg',
+
+  audioFactory: null,
 
   onComplete: () => {},
   onLoopComplete: () => {},
