@@ -44,6 +44,23 @@ class Example extends Component {
 
 [View example code](https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js)
 
+## Lazy loading example
+
+```js
+const MyComponent = () => {
+  const [animationData, setAnimationData] = useState();
+
+  useEffect(() => {
+    import('./animation.json').then(setAnimationData);
+  }, []);
+
+  if (!animationData) return <div>Loading...</div>;
+  return <Lottie animationData={animationData} />;
+}
+```
+
+See [#11](https://github.com/mifi/react-lottie-player/issues/11)
+
 ## API
 
 See https://github.com/airbnb/lottie-web
