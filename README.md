@@ -17,23 +17,22 @@ npm install --save react-lottie-player
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 import Lottie from 'react-lottie-player'
 
 import lottieJson from './my-lottie.json'
 
-class Example extends Component {
-  render() {
-    return (
-      <Lottie
-        loop
-        animationData={lottieJson}
-        play
-        style={{ width: 150, height: 150 }}
-      />
-    )
-  }
+export default function Example(){
+  return (
+    <Lottie
+      loop
+      animationData={lottieJson}
+      play
+      style={{ width: 150, height: 150 }}
+    />
+  )
 }
+
 ```
 
 ## Example
