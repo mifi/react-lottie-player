@@ -22,7 +22,7 @@ import Lottie from 'react-lottie-player'
 
 import lottieJson from './my-lottie.json'
 
-export default function Example(){
+export default function Example() {
   return (
     <Lottie
       loop
@@ -32,7 +32,6 @@ export default function Example(){
     />
   )
 }
-
 ```
 
 ## Example
