@@ -30,6 +30,16 @@ describe('screenshots', () => {
 
     expect(image).toMatchImageSnapshot();
   });
+
+  it('renders with path', async () => {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 150, height: 150 });
+    await page.goto(`${baseUrl}/test/2`);
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+  });
+
   afterAll(async () => {
     await browser.close();
     craProcess.kill();

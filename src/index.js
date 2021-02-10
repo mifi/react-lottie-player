@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual';
 
 const Lottie = memo(({
   animationData,
+  path,
 
   play,
   speed,
@@ -55,6 +56,7 @@ const Lottie = memo(({
     // console.log('init')
     animRef.current = lottie.loadAnimation({
       animationData,
+      path,
       container: animElementRef.current,
       renderer,
       loop: false,
@@ -72,7 +74,7 @@ const Lottie = memo(({
       animRef.current.destroy();
       animRef.current = undefined;
     };
-  }, [loop, renderer, rendererSettings, animationData, audioFactory]);
+  }, [loop, renderer, rendererSettings, animationData, path, audioFactory]);
 
   useEffect(() => {
     animRef.current.addEventListener('complete', onComplete);
@@ -143,7 +145,8 @@ const Lottie = memo(({
 
 
 Lottie.propTypes = {
-  animationData: PropTypes.object.isRequired,
+  animationData: PropTypes.object,
+  path: PropTypes.string,
 
   play: PropTypes.bool,
   goTo: PropTypes.number,
@@ -166,6 +169,8 @@ Lottie.propTypes = {
 };
 
 Lottie.defaultProps = {
+  animationData: null,
+  path: null,
   play: null,
   segments: null,
   goTo: null,
