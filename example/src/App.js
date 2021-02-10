@@ -1,6 +1,7 @@
 import Lottie from 'react-lottie-player'
 
 import React, { useState, memo } from 'react';
+import Test from './Test';
 
 import lottieJson from './26514-check-success-animation.json';
 
@@ -131,15 +132,19 @@ const RangeText = memo(() => {
 });
 
 
-const App = () => (
-  <>
-    <h1 style={{ textAlign: 'center' }}>react-lottie-player Live Demo</h1>
-    <p style={{ textAlign: 'center' }}><a href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js">View source here</a></p>
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      <MainTest />
-      <RangeText />
-    </div>
-  </>
-);
+const App = () => {
+  if (window.location.pathname.startsWith('/test')) return <Test />;
+
+  return (
+    <>
+      <h1 style={{ textAlign: 'center' }}>react-lottie-player Live Demo</h1>
+      <p style={{ textAlign: 'center' }}><a href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js">View source here</a></p>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <MainTest />
+        <RangeText />
+      </div>
+    </>
+  );  
+}
 
 export default App
