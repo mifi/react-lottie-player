@@ -63,7 +63,7 @@ See [#11](https://github.com/mifi/react-lottie-player/issues/11)
 
 See https://github.com/airbnb/lottie-web
 
-[View PropTypes](https://github.com/mifi/react-lottie-player/blob/af42ad34da384483cce539af978f9fb89cfa6e41/src/index.js#L141)
+[View PropTypes](https://github.com/mifi/react-lottie-player/blob/64eac186947be7ee5aad304ca4193c507ace8dc3/src/index.js#L147)
 
 ## Credits
 
