@@ -16,6 +16,6 @@ jobs:
       - run: yarn
       - run: (cd example && yarn)
 
-#      - uses: mxschmitt/action-tmate@v3
+      - uses: mxschmitt/action-tmate@v3
 
       - run: npm test
