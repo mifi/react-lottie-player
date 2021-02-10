@@ -145,6 +145,7 @@ const Lottie = memo(({
 
 
 Lottie.propTypes = {
+  // You can use either animationData OR path
   animationData: PropTypes.object,
   path: PropTypes.string,
 
@@ -171,6 +172,7 @@ Lottie.propTypes = {
 Lottie.defaultProps = {
   animationData: null,
   path: null,
+
   play: null,
   segments: null,
   goTo: null,
