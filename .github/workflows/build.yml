@@ -13,9 +13,8 @@ jobs:
         with:
           node-version: 12
 
-      - run: |
-        yarn
-        (cd example && yarn)
+      - run: yarn
+      - run: (cd example && yarn)
 
 #      - uses: mxschmitt/action-tmate@v3
 
