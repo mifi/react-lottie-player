@@ -26,6 +26,7 @@ describe('screenshots', () => {
     const page = await browser.newPage();
     await page.setViewport({ width: 150, height: 150 });
     await page.goto(`${baseUrl}/test/1`);
+    await page.waitForTimeout(500); // Sometimes page is white
     const image = await page.screenshot();
 
     expect(image).toMatchImageSnapshot();
@@ -35,6 +36,7 @@ describe('screenshots', () => {
     const page = await browser.newPage();
     await page.setViewport({ width: 150, height: 150 });
     await page.goto(`${baseUrl}/test/2`);
+    await page.waitForTimeout(500); // Sometimes page is white
     const image = await page.screenshot();
 
     expect(image).toMatchImageSnapshot();
