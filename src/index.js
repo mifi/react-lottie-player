@@ -100,16 +100,34 @@ const Lottie = memo(({
   useEffect(() => {
     if (!ready) return;
 
+    // Without this code, when playback restarts, it will not play in reverse:
+    // https://github.com/mifi/react-lottie-player/issues/19
+    function playReverse(lastFrame) {
+      animRef.current.goToAndPlay(lastFrame, true);
+      animRef.current.setDirection(direction);
+    }
+
     if (play === true) {
       const force = true;
       if (segments) {
         animRef.current.playSegments(segments, force);
+
+        // This needs to be called after playSegments or it will not play backwards
+        if (direction === -1) {
+          // TODO What if more than one segment
+          const lastFrame = segments[1];
+          playReverse(lastFrame);
+        }
       } else {
         // https://github.com/airbnb/lottie-web/blob/master/index.d.ts
         animRef.current.resetSegments(force);
-        animRef.current.play();
+        if (direction === -1) {
+          const lastFrame = animRef.current.getDuration(true);
+          playReverse(lastFrame);
+        } else {
+          animRef.current.play();
+        }
       }
-      animRef.current.setDirection(direction);
     } else if (play === false) {
       animRef.current.pause();
     }
@@ -121,6 +139,7 @@ const Lottie = memo(({
     animRef.current.setSpeed(speed);
   }, [speed, ready]);
 
+  // This handles the case where only direction has changed (direction is not a dependency of the other effect that calls setDirection)
   useEffect(() => {
     if (!ready) return;
     animRef.current.setDirection(direction);
