@@ -49,6 +49,7 @@ const MainTest = memo(() => {
         onLoopComplete={() => addLog('loopComplete')}
         onEnterFrame={() => { /* addLog('enterFrame') */ }}
         onSegmentStart={() => addLog('segmentStart')}
+        onLoad={() => addLog('load')}
       />
 
       <div style={{ margin: '7px 0' }}><input type="checkbox" checked={loop} onChange={e => setLoop(e.target.checked)} id="loop" /> <label htmlFor="loop">Loop</label></div>

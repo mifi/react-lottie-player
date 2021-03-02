@@ -19,6 +19,7 @@ const Lottie = memo(({
 
   audioFactory,
 
+  onLoad,
   onComplete,
   onLoopComplete,
   onEnterFrame,
@@ -65,11 +66,14 @@ const Lottie = memo(({
       audioFactory,
     });
 
-    const onReady = () => setReady(true);
-    animRef.current.addEventListener('DOMLoaded', onReady);
+    function onDomLoaded() {
+      setReady(true);
+      onLoad();
+    }
+    animRef.current.addEventListener('DOMLoaded', onDomLoaded);
 
     return () => {
-      animRef.current.removeEventListener('DOMLoaded', onReady);
+      animRef.current.removeEventListener('DOMLoaded', onDomLoaded);
       setReady(false);
       animRef.current.destroy();
       animRef.current = undefined;
@@ -205,6 +209,7 @@ Lottie.defaultProps = {
 
   audioFactory: null,
 
+  onLoad: () => {},
   onComplete: () => {},
   onLoopComplete: () => {},
   onEnterFrame: () => {},
