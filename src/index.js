@@ -1,7 +1,7 @@
 import React, { memo, useRef, useEffect, useState } from 'react';
 import lottie from 'lottie-web';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
+import equal from 'fast-deep-equal/es6/react';
 
 const Lottie = memo(({
   animationData,
@@ -35,14 +35,14 @@ const Lottie = memo(({
 
   // Prevent re-init
   useEffect(() => {
-    if (!isEqual(segments, segmentsIn)) setSegments(segmentsIn);
+    if (!equal(segments, segmentsIn)) setSegments(segmentsIn);
   }, [segmentsIn, segments]);
 
   const [rendererSettings, setRendererSettings] = useState(rendererSettingsIn);
 
   // Prevent re-init
   useEffect(() => {
-    if (!isEqual(rendererSettings, rendererSettingsIn)) setRendererSettings(rendererSettingsIn);
+    if (!equal(rendererSettings, rendererSettingsIn)) setRendererSettings(rendererSettingsIn);
   }, [rendererSettingsIn, rendererSettings]);
 
 
