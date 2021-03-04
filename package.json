@@ -8,6 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
+  "types": "src/types/index.d.ts",
   "engines": {
     "node": ">=10"
   },
