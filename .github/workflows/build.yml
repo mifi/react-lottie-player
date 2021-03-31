@@ -20,6 +20,8 @@ jobs:
 
       - run: npm test
 
+      - run: npm run predeploy
+
       - if: github.ref == 'refs/heads/master'
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
