@@ -101,6 +101,8 @@ const Lottie = memo(({
     animRef.current.loop = loop;
   }, [ready, loop]);
 
+  const wasPlayingSegmentsRef = useRef(false);
+
   useEffect(() => {
     if (!ready) return;
 
@@ -115,6 +117,7 @@ const Lottie = memo(({
       const force = true;
       if (segments) {
         animRef.current.playSegments(segments, force);
+        wasPlayingSegmentsRef.current = true;
 
         // This needs to be called after playSegments or it will not play backwards
         if (direction === -1) {
@@ -123,8 +126,13 @@ const Lottie = memo(({
           playReverse(lastFrame);
         }
       } else {
+        // If we called playSegments last time, the segments are stored as a state in the lottie object
+        // Need to reset segments or else it will still play the old segments also when calling play()
+        // wasPlayingSegmentsRef: Only reset segments if playSegments last time, because resetSegments will also reset playback position
         // https://github.com/airbnb/lottie-web/blob/master/index.d.ts
-        animRef.current.resetSegments(force);
+        if (wasPlayingSegmentsRef.current) animRef.current.resetSegments(force);
+        wasPlayingSegmentsRef.current = false;
+
         if (direction === -1) {
           const lastFrame = animRef.current.getDuration(true);
           playReverse(lastFrame);
