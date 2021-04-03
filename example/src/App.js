@@ -15,10 +15,11 @@ const ScrollTest = memo(() => {
     function handleScroll(e) {
       setAnimationPosition(Math.max((0, e.target.scrollTop - 50) * 0.3));
     }
-    scrollRef.current.addEventListener('scroll', handleScroll, { passive: true });
+    const scroller = scrollRef.current
+    scroller.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      scrollRef.current.removeEventListener('scroll', handleScroll);
+      scroller.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -26,7 +27,7 @@ const ScrollTest = memo(() => {
     <div ref={scrollRef} style={{ ...boxStyle, height: 400, overflowY: 'scroll' }}>
       <div style={{ textAlign: 'center' }}>
         <div>Scroll down</div>
-        <span style={{ fontSize: 40 }}>⬇️</span>
+        <span style={{ fontSize: 40 }} role="img" aria-label="Scroll down">⬇️</span>
       </div>
 
       <Lottie
