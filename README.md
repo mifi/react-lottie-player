@@ -57,7 +57,12 @@ const MyComponent = () => {
 }
 ```
 
-See [#11](https://github.com/mifi/react-lottie-player/issues/11)
+See also [#11](https://github.com/mifi/react-lottie-player/issues/11)
+
+## Lottie animation track scrolling div
+
+See [example/App.js](https://github.com/mifi/react-lottie-player/blob/master/example/src/App.js) (ScrollTest) in [live example](https://mifi.github.io/react-lottie-player/).
+
 
 ## API
 

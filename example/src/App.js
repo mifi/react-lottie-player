@@ -1,11 +1,42 @@
 import Lottie from 'react-lottie-player'
 
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useRef, useEffect } from 'react';
 import Test from './Test';
 
 import lottieJson from './26514-check-success-animation.json';
 
 const boxStyle = { boxShadow: '0 0 10px 10px rgba(0,0,0,0.03)', width: 200, maxWidth: '100%', margin: 30, padding: 30, borderRadius: 7, display: 'flex', flexDirection: 'column' };
+
+const ScrollTest = memo(() => {
+  const scrollRef = useRef();
+  const [animationPosition, setAnimationPosition] = useState(0);
+
+  useEffect(() => {
+    function handleScroll(e) {
+      setAnimationPosition(Math.max((0, e.target.scrollTop - 50) * 0.3));
+    }
+    scrollRef.current.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      scrollRef.current.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return (
+    <div ref={scrollRef} style={{ ...boxStyle, height: 400, overflowY: 'scroll' }}>
+      <div style={{ textAlign: 'center' }}>
+        <div>Scroll down</div>
+        <span style={{ fontSize: 40 }}>⬇️</span>
+      </div>
+
+      <Lottie
+        animationData={lottieJson}
+        goTo={animationPosition}
+        style={{ width: 150, height: 150, marginBottom: 10, alignSelf: 'center', marginTop: 200, marginBottom: 300 }}
+      />
+    </div>
+  )
+});
 
 const MainTest = memo(() => {
   const [segmentFrom, setSegmentFrom] = useState(0);
@@ -143,6 +174,7 @@ const App = () => {
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         <MainTest />
         <RangeText />
+        <ScrollTest />
       </div>
     </>
   );  
