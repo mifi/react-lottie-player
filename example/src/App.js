@@ -32,7 +32,7 @@ const ScrollTest = memo(() => {
       <Lottie
         animationData={lottieJson}
         goTo={animationPosition}
-        style={{ width: 150, height: 150, marginBottom: 10, alignSelf: 'center', marginTop: 200, marginBottom: 300 }}
+        style={{ width: 150, height: 150, alignSelf: 'center', marginTop: 200, marginBottom: 300 }}
       />
     </div>
   )
