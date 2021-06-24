@@ -3,4 +3,4 @@ dist/
 node_modules/
 .snapshots/
 *.min.js
-index.d.ts
+*.d.ts
