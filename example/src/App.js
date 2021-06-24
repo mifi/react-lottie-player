@@ -91,7 +91,6 @@ const MainTest = memo(() => {
         <input type="number" value={getLoopVal()} onChange={handleLoopTimesChange} />
       </div>
 
-
       <div style={{ margin: '7px 0' }}><input type="checkbox" checked={play} onChange={e => setPlay(e.target.checked)} id="playing1" /> <label htmlFor="playing1">Playing</label></div>
 
       <div style={{ margin: '7px 0' }}>
@@ -136,30 +135,37 @@ const MainTest = memo(() => {
 const RangeText = memo(() => {
   const [goTo, setGoTo] = useState(55);
   const [play, setPlay] = useState(false);
+  const [mounted, setMounted] = useState(true);
 
   return (
     <div style={boxStyle}>
-      <Lottie
-        play={play}
-        goTo={goTo}
-        animationData={lottieJson}
-        style={{ width: 150, height: 150, marginBottom: 10 }}
-      />
+      <div style={{ margin: '7px 0' }}><input type="checkbox" checked={mounted} onChange={e => setMounted(e.target.checked)} id="mounted1" /> <label htmlFor="mounted1">Mounted</label></div>
 
-      <div style={{ margin: '10px 0' }}><input type="checkbox" checked={play} onChange={e => setPlay(e.target.checked)} id="playing2" /><label htmlFor="playing2">Playing</label></div>
+      {mounted && (
+        <>
+          <Lottie
+            play={play}
+            goTo={goTo}
+            animationData={lottieJson}
+            style={{ width: 150, height: 150, marginBottom: 10 }}
+          />
 
-      <div style={{ margin: '10px 0' }}>
-        Controlled position<br />
-        <input
-          style={{ width: '100%' }}
-          type="range"
-          min="0"
-          max="108"
-          value={goTo}
-          onChange={(e) => setGoTo(parseInt(e.target.value, 10))}
-          step="1"
-        />
-      </div>
+          <div style={{ margin: '10px 0' }}><input type="checkbox" checked={play} onChange={e => setPlay(e.target.checked)} id="playing2" /><label htmlFor="playing2">Playing</label></div>
+
+          <div style={{ margin: '10px 0' }}>
+            Controlled position<br />
+            <input
+              style={{ width: '100%' }}
+              type="range"
+              min="0"
+              max="108"
+              value={goTo}
+              onChange={(e) => setGoTo(parseInt(e.target.value, 10))}
+              step="1"
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 });

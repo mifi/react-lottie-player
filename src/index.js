@@ -2,6 +2,7 @@ import React, { memo, useRef, useEffect, useState } from 'react'
 import lottie from 'lottie-web'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal/es6/react'
+import cloneDeep from 'lodash.clonedeep'
 
 const Lottie = memo(({
   animationData,
@@ -55,7 +56,8 @@ const Lottie = memo(({
   useEffect(() => {
     // console.log('init')
     animRef.current = lottie.loadAnimation({
-      animationData,
+      // To prevent memory leak. See #35
+      animationData: animationData != null ? cloneDeep(animationData) : null,
       path,
       container: animElementRef.current,
       renderer,

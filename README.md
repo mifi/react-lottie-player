@@ -6,6 +6,8 @@ Inspired by [several](https://github.com/felippenardi/lottie-react-web) [existin
 
 `react-lottie-player` is a complete rewrite using modern hooks 🎣 for more readable code, an easy to use, seamless and **fully declarative control of the lottie player**.
 
+Does not [leak memory like lottie-web](https://github.com/mifi/react-lottie-player/issues/35)  if you use repeaters.
+
 ![Tests](https://github.com/mifi/react-lottie-player/workflows/Tests/badge.svg) [![NPM](https://img.shields.io/npm/v/react-lottie-player.svg)](https://www.npmjs.com/package/react-lottie-player) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
