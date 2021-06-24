@@ -72,6 +72,11 @@ See https://github.com/airbnb/lottie-web
 
 [View PropTypes](https://github.com/mifi/react-lottie-player/blob/64eac186947be7ee5aad304ca4193c507ace8dc3/src/index.js#L147)
 
+## Releasing
+
+- Commit & wait for CI tests
+- `np`
+
 ## Credits
 
 - https://lottiefiles.com/26514-check-success-animation
