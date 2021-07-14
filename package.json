@@ -5,15 +5,13 @@
   "author": "mifi",
   "license": "MIT",
   "repository": "mifi/react-lottie-player",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
-  "source": "src/index.js",
   "engines": {
     "node": ">=10"
   },
+  "main": "dist/LottiePlayer.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs && cp src/index.d.ts dist",
+    "build": "rm -rf dist && microbundle-crl src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist && cp src/index.d.ts dist",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:lint test:unit test:build",
