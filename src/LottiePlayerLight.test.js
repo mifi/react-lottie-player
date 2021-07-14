@@ -10,7 +10,7 @@ beforeAll(() => {
 
 const baseUrl = 'http://localhost:3000'
 
-describe('screenshots', () => {
+describe('lottie player light screenshots', () => {
   let browser
   let craProcess
 
@@ -18,7 +18,11 @@ describe('screenshots', () => {
 
   beforeAll(async () => {
     browser = await puppeteer.launch()
-    craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none' } })
+    craProcess = execa('npm start', {
+      cwd: 'example',
+      shell: true,
+      env: { BROWSER: 'none' }
+    })
     await waitOn({ resources: [baseUrl] })
   })
 
