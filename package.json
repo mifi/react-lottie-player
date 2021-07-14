@@ -5,10 +5,11 @@
   "author": "mifi",
   "license": "MIT",
   "repository": "mifi/react-lottie-player",
+  "main": "dist/LottiePlayer.js",
+  "module": "dist/LottiePlayer.modern.js",
   "engines": {
     "node": ">=10"
   },
-  "main": "dist/LottiePlayer.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && microbundle-crl src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist && cp src/index.d.ts dist",
