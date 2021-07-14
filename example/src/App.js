@@ -170,14 +170,12 @@ const RangeTest = memo(() => {
   );
 });
 
-const baseUrl = window.location.href.match(/^([^:]+:\/\/[^/]+\/)/g)[0];
-
 const PathLoadTest = () => (
   <div style={boxStyle}>
     <Lottie
       play
       loop
-      path={`${baseUrl}/26514-check-success-animation.json`}
+      path={`${window.location.href}26514-check-success-animation.json`}
       style={{ width: 150, height: 150, marginBottom: 10 }}
     />
 
