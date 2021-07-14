@@ -54,10 +54,21 @@ const Lottie = memo(({
   useEffect(() => () => animRef.current.removeEventListener('segmentStart', onSegmentStart), [onSegmentStart])
 
   useEffect(() => {
+    function parseAnimationData() {
+      if (animationData == null || typeof animationData !== 'object') return animationData
+
+      // https://github.com/mifi/react-lottie-player/issues/11#issuecomment-879310039
+      // https://github.com/chenqingspring/vue-lottie/issues/20
+      if (typeof animationData.default === 'object') {
+        return cloneDeep(animationData.default)
+      }
+      // cloneDeep to prevent memory leak. See #35
+      return cloneDeep(animationData)
+    }
+
     // console.log('init')
     animRef.current = lottie.loadAnimation({
-      // To prevent memory leak. See #35
-      animationData: animationData != null ? cloneDeep(animationData) : null,
+      animationData: parseAnimationData(),
       path,
       container: animElementRef.current,
       renderer,
