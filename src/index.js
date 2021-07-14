@@ -2,7 +2,7 @@ import React, { memo, useRef, useEffect, useState } from 'react'
 import lottie from 'lottie-web'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal/es6/react'
-import cloneDeep from 'lodash.clonedeep'
+import { merge } from 'merge-anything'
 
 const Lottie = memo(({
   animationData,
@@ -60,10 +60,10 @@ const Lottie = memo(({
       // https://github.com/mifi/react-lottie-player/issues/11#issuecomment-879310039
       // https://github.com/chenqingspring/vue-lottie/issues/20
       if (typeof animationData.default === 'object') {
-        return cloneDeep(animationData.default)
+        return merge({}, animationData.default)
       }
       // cloneDeep to prevent memory leak. See #35
-      return cloneDeep(animationData)
+      return merge({}, animationData)
     }
 
     // console.log('init')
