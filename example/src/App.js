@@ -26,7 +26,7 @@ const ScrollTest = memo(() => {
   return (
     <div ref={scrollRef} style={{ ...boxStyle, height: 400, overflowY: 'scroll' }}>
       <div style={{ textAlign: 'center' }}>
-        <div>Scroll down</div>
+        <p>Scroll down</p>
         <span style={{ fontSize: 40 }} role="img" aria-label="Scroll down">⬇️</span>
       </div>
 
@@ -132,7 +132,7 @@ const MainTest = memo(() => {
   );
 });
 
-const RangeText = memo(() => {
+const RangeTest = memo(() => {
   const [goTo, setGoTo] = useState(55);
   const [play, setPlay] = useState(false);
   const [mounted, setMounted] = useState(true);
@@ -170,6 +170,49 @@ const RangeText = memo(() => {
   );
 });
 
+const baseUrl = window.location.href.match(/^([^:]+:\/\/[^/]+\/)/g)[0];
+
+const PathLoadTest = () => (
+  <div style={boxStyle}>
+    <Lottie
+      play
+      loop
+      path={`${baseUrl}/26514-check-success-animation.json`}
+      style={{ width: 150, height: 150, marginBottom: 10 }}
+    />
+
+  <p>Loaded with <b>path</b> URL</p>
+  </div>
+);
+
+
+const LazyLoadTest = memo(() => {
+  const [animationData, setAnimationData] = useState();
+
+  useEffect(() => {
+    setTimeout(() => {
+      import('./26514-check-success-animation.json').then(setAnimationData);
+    }, 1000);
+  }, []);
+
+  return (
+    <div style={boxStyle}>
+      {animationData ? (
+        <Lottie
+          play
+          loop
+          animationData={animationData}
+          style={{ width: 150, height: 150, marginBottom: 10 }}
+        />
+      ) : (
+        <div>Loading...</div>
+      )}
+
+      <p>Lazy loaded with <b>import()</b></p>
+    </div>
+  );
+});
+
 
 const App = () => {
   if (window.location.pathname.startsWith('/test')) return <Test />;
@@ -180,8 +223,10 @@ const App = () => {
       <p style={{ textAlign: 'center' }}><a href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js">View source here</a></p>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         <MainTest />
-        <RangeText />
+        <RangeTest />
         <ScrollTest />
+        <LazyLoadTest />
+        <PathLoadTest />
       </div>
     </>
   );  
