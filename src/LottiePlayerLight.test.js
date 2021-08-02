@@ -18,11 +18,7 @@ describe('lottie player light screenshots', () => {
 
   beforeAll(async () => {
     browser = await puppeteer.launch()
-    craProcess = execa('npm start', {
-      cwd: 'example',
-      shell: true,
-      env: { BROWSER: 'none' }
-    })
+    craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none' } })
     await waitOn({ resources: [baseUrl] })
   })
 
