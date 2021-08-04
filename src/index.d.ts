@@ -10,21 +10,12 @@ declare module 'react-lottie-player' {
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > &
-    Pick<AnimationConfig, 'loop' | 'renderer' | 'rendererSettings'> & {
+    Pick<AnimationConfig, 'loop' | 'renderer' | 'rendererSettings' | 'audioFactory'> & {
       play?: boolean
       goTo?: number
       speed?: number
       direction?: AnimationDirection
       segments?: AnimationSegment | AnimationSegment[]
-      // Replace with AnimationConfig definition after this is merged:
-      // https://github.com/airbnb/lottie-web/pull/2547
-      audioFactory?(assetPath: string): {
-        play(): void
-        seek(): void
-        playing(): void
-        rate(): void
-        setVolume(): void
-      }
 
       onComplete?: AnimationEventCallback
       onLoopComplete?: AnimationEventCallback
