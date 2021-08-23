@@ -5,18 +5,17 @@
   "author": "mifi",
   "license": "MIT",
   "repository": "mifi/react-lottie-player",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
-  "source": "src/index.js",
+  "main": "dist/LottiePlayer.js",
+  "module": "dist/LottiePlayer.modern.js",
   "engines": {
     "node": ">=10"
   },
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs && cp src/index.d.ts dist",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "build": "rm -rf dist && microbundle-crl src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist && cp src/index.d.ts dist",
+    "start": "rm -rf dist && microbundle-crl watch src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist",
     "prepare": "run-s build",
-    "test": "run-s test:lint test:unit test:build",
+    "test": "run-s test:lint test:build test:unit",
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
