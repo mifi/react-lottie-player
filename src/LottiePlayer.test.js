@@ -22,24 +22,34 @@ describe('lottie player screenshots', () => {
     await waitOn({ resources: [baseUrl] })
   })
 
-  it('renders with animationData', async () => {
+  async function runScreenshotTest(path) {
     const page = await browser.newPage()
     await page.setViewport({ width: 150, height: 150 })
-    await page.goto(`${baseUrl}/test/1`)
+    await page.goto(`${baseUrl}${path}`)
     await page.waitForTimeout(500) // Sometimes page is white
     const image = await page.screenshot()
 
     expect(image).toMatchImageSnapshot()
+  }
+
+  describe('lottie player main', () => {
+    it('renders with animationData', async () => {
+      await runScreenshotTest('/test/1')
+    })
+
+    it('renders with path', async () => {
+      await runScreenshotTest('/test/2')
+    })
   })
 
-  it('renders with path', async () => {
-    const page = await browser.newPage()
-    await page.setViewport({ width: 150, height: 150 })
-    await page.goto(`${baseUrl}/test/2`)
-    await page.waitForTimeout(500) // Sometimes page is white
-    const image = await page.screenshot()
+  describe('lottie player light', () => {
+    it('renders with animationData', async () => {
+      await runScreenshotTest('/test/3')
+    })
 
-    expect(image).toMatchImageSnapshot()
+    it('renders with path', async () => {
+      await runScreenshotTest('/test/4')
+    })
   })
 
   afterAll(async () => {
