@@ -15,7 +15,7 @@
     "build": "rm -rf dist && microbundle-crl src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist && cp src/index.d.ts dist",
     "start": "rm -rf dist && microbundle-crl watch src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist",
     "prepare": "run-s build",
-    "test": "run-s test:lint test:unit test:build",
+    "test": "run-s test:lint test:build test:unit",
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
