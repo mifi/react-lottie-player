@@ -1,4 +1,5 @@
 import Lottie from 'react-lottie-player'
+import LottieLight from 'react-lottie-player/dist/LottiePlayerLight'
 
 import React, { useState, memo, useRef, useEffect } from 'react';
 import Test from './Test';
@@ -184,6 +185,19 @@ const PathLoadTest = () => (
 );
 
 
+const LottieLightTest = () => (
+  <div style={boxStyle}>
+    <LottieLight
+      play
+      loop
+      path={`${window.location.href}26514-check-success-animation.json`}
+      style={{ width: 150, height: 150, marginBottom: 10 }}
+    />
+
+  <p>Lottie Light</p>
+  </div>
+);
+
 const LazyLoadTest = memo(() => {
   const [animationData, setAnimationData] = useState();
 
@@ -225,6 +239,7 @@ const App = () => {
         <ScrollTest />
         <LazyLoadTest />
         <PathLoadTest />
+        <LottieLightTest />
       </div>
     </>
   );  
