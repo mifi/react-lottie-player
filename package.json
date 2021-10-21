@@ -12,7 +12,7 @@
   },
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && microbundle-crl src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist && cp src/index.d.ts dist",
+    "build": "rm -rf dist && microbundle-crl src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist && cp src/*.d.ts dist",
     "start": "rm -rf dist && microbundle-crl watch src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist",
     "prepare": "run-s build",
     "test": "run-s test:lint test:build test:unit",
