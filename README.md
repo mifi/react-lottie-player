@@ -72,6 +72,13 @@ See also [#11](https://github.com/mifi/react-lottie-player/issues/11)
 
 See [example/App.js](https://github.com/mifi/react-lottie-player/blob/master/example/src/App.js) (ScrollTest) in [live example](https://mifi.github.io/react-lottie-player/).
 
+## Resize mode: cover
+
+If you want the animation to fill the whole container, you can pass this prop. See also [#55](https://github.com/mifi/react-lottie-player/issues/55):
+
+```js
+<Lottie rendererSettings={{ preserveAspectRatio: 'xMidYMid slice' }} />
+```
 
 ## API
 
