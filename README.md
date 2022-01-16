@@ -62,11 +62,11 @@ const MyComponent = () => {
 }
 ```
 
+See also [#11](https://github.com/mifi/react-lottie-player/issues/11)
+
 ## LottiePlayerLight
 
 The default lottie player uses `eval`. If you don't want eval to be used in your code base, you can instead import `react-lottie-player/dist/LottiePlayerLight`. For more discussion see [#39](https://github.com/mifi/react-lottie-player/pull/39).
-
-See also [#11](https://github.com/mifi/react-lottie-player/issues/11)
 
 ## Lottie animation track scrolling div
 
