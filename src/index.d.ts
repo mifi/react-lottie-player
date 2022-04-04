@@ -6,7 +6,7 @@ declare module 'react-lottie-player' {
     AnimationSegment
   } from 'lottie-web'
 
-  type LottieProps = React.DetailedHTMLProps<
+  export type LottieProps = React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > &
