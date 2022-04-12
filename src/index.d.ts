@@ -1,4 +1,4 @@
-declare module 'react-lottie-player' {
+declare module '@bricehabib/react-lottie-player' {
   import type {
     AnimationConfig,
     AnimationDirection,
@@ -10,7 +10,7 @@ declare module 'react-lottie-player' {
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > &
-    Pick<AnimationConfig, 'loop' | 'renderer' | 'rendererSettings' | 'audioFactory'> & {
+    Pick<AnimationConfig, 'loop' | 'renderer' | 'rendererSettings'> & {
       play?: boolean
       goTo?: number
       speed?: number
@@ -21,6 +21,8 @@ declare module 'react-lottie-player' {
       onLoopComplete?: AnimationEventCallback
       onEnterFrame?: AnimationEventCallback
       onSegmentStart?: AnimationEventCallback
+
+      getDuration?: (x: number) => any;
     } & ({ path?: string } | { animationData?: object })
 
   const Lottie: React.FC<LottieProps>
