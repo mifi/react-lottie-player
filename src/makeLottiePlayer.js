@@ -26,6 +26,8 @@ const makeLottiePlayer = (lottie) => {
     onEnterFrame,
     onSegmentStart,
 
+    getDuration,
+
     ...props
   }) => {
     const animElementRef = useRef()
@@ -79,6 +81,7 @@ const makeLottiePlayer = (lottie) => {
       })
 
       function onDomLoaded() {
+        if (getDuration) getDuration(animRef.current.totalFrames)
         setReady(true)
         onLoad()
       }
@@ -208,7 +211,9 @@ const makeLottiePlayer = (lottie) => {
     onComplete: PropTypes.func,
     onLoopComplete: PropTypes.func,
     onEnterFrame: PropTypes.func,
-    onSegmentStart: PropTypes.func
+    onSegmentStart: PropTypes.func,
+
+    getDuration: PropTypes.func
   }
 
   Lottie.defaultProps = {
@@ -232,7 +237,9 @@ const makeLottiePlayer = (lottie) => {
     onComplete: () => {},
     onLoopComplete: () => {},
     onEnterFrame: () => {},
-    onSegmentStart: () => {}
+    onSegmentStart: () => {},
+
+    getDuration: () => {}
   }
 
   return Lottie
