@@ -47,12 +47,6 @@ const makeLottiePlayer = (lottie) => {
       if (!equal(rendererSettings, rendererSettingsIn)) setRendererSettings(rendererSettingsIn)
     }, [rendererSettingsIn, rendererSettings])
 
-    // In order to remove listeners before animRef gets destroyed:
-    useEffect(() => () => animRef.current.removeEventListener('complete', onComplete), [onComplete])
-    useEffect(() => () => animRef.current.removeEventListener('loopComplete', onLoopComplete), [onLoopComplete])
-    useEffect(() => () => animRef.current.removeEventListener('enterFrame', onEnterFrame), [onEnterFrame])
-    useEffect(() => () => animRef.current.removeEventListener('segmentStart', onSegmentStart), [onSegmentStart])
-
     useEffect(() => {
       function parseAnimationData() {
         if (animationData == null || typeof animationData !== 'object') return animationData
@@ -94,18 +88,22 @@ const makeLottiePlayer = (lottie) => {
 
     useEffect(() => {
       animRef.current.addEventListener('complete', onComplete)
+      return () => animRef.current.removeEventListener('complete', onComplete)
     }, [onComplete])
 
     useEffect(() => {
       animRef.current.addEventListener('loopComplete', onLoopComplete)
+      return () => animRef.current.removeEventListener('loopComplete', onLoopComplete)
     }, [onLoopComplete])
 
     useEffect(() => {
       animRef.current.addEventListener('enterFrame', onEnterFrame)
+      return () => animRef.current.removeEventListener('enterFrame', onEnterFrame)
     }, [onEnterFrame])
 
     useEffect(() => {
       animRef.current.addEventListener('segmentStart', onSegmentStart)
+      return () => animRef.current.removeEventListener('segmentStart', onSegmentStart)
     }, [onSegmentStart])
 
     useEffect(() => {
