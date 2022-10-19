@@ -1,4 +1,5 @@
 import Lottie from 'react-lottie-player'
+import LottieLight from 'react-lottie-player/dist/LottiePlayerLight'
 
 import React, { useState, memo, useRef, useEffect } from 'react';
 import Test from './Test';
@@ -7,7 +8,7 @@ import lottieJson from './26514-check-success-animation.json';
 
 const boxStyle = { boxShadow: '0 0 10px 10px rgba(0,0,0,0.03)', width: 200, maxWidth: '100%', margin: 30, padding: 30, borderRadius: 7, display: 'flex', flexDirection: 'column' };
 
-const ScrollTest = memo(() => {
+const ScrollTest = memo(({ Component }) => {
   const scrollRef = useRef();
   const [animationPosition, setAnimationPosition] = useState(0);
 
@@ -30,7 +31,7 @@ const ScrollTest = memo(() => {
         <span style={{ fontSize: 40 }} role="img" aria-label="Scroll down">⬇️</span>
       </div>
 
-      <Lottie
+      <Component
         animationData={lottieJson}
         goTo={animationPosition}
         style={{ width: 150, height: 150, alignSelf: 'center', marginTop: 200, marginBottom: 300 }}
@@ -39,7 +40,7 @@ const ScrollTest = memo(() => {
   )
 });
 
-const MainTest = memo(() => {
+const MainTest = memo(({ Component }) => {
   const [segmentFrom, setSegmentFrom] = useState(0);
   const [segmentTo, setSegmentTo] = useState(70);
   const [segmentsEnabled, setSegmentsEnabled] = useState(false);
@@ -69,7 +70,7 @@ const MainTest = memo(() => {
 
   return (
     <div style={boxStyle}>
-      <Lottie
+      <Component
         loop={loop}
         speed={speed}
         play={play}
@@ -132,7 +133,7 @@ const MainTest = memo(() => {
   );
 });
 
-const RangeTest = memo(() => {
+const RangeTest = memo(({ Component }) => {
   const [goTo, setGoTo] = useState(55);
   const [play, setPlay] = useState(false);
   const [mounted, setMounted] = useState(true);
@@ -143,7 +144,7 @@ const RangeTest = memo(() => {
 
       {mounted && (
         <>
-          <Lottie
+          <Component
             play={play}
             goTo={goTo}
             animationData={lottieJson}
@@ -170,9 +171,9 @@ const RangeTest = memo(() => {
   );
 });
 
-const PathLoadTest = () => (
+const PathLoadTest = ({ Component }) => (
   <div style={boxStyle}>
-    <Lottie
+    <Component
       play
       loop
       path={`${window.location.href}26514-check-success-animation.json`}
@@ -184,7 +185,7 @@ const PathLoadTest = () => (
 );
 
 
-const LazyLoadTest = memo(() => {
+const LazyLoadTest = memo(({ Component }) => {
   const [animationData, setAnimationData] = useState();
 
   useEffect(() => {
@@ -196,7 +197,7 @@ const LazyLoadTest = memo(() => {
   return (
     <div style={boxStyle}>
       {animationData ? (
-        <Lottie
+        <Component
           play
           loop
           animationData={animationData}
@@ -213,21 +214,26 @@ const LazyLoadTest = memo(() => {
 
 
 const App = () => {
-  if (window.location.pathname.startsWith('/test')) return <Test />;
+  const [useLottieLight, setUseLottieLight] = useState(false);
+
+  const Component = useLottieLight ? LottieLight : Lottie;
 
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>react-lottie-player Live Demo</h1>
-      <p style={{ textAlign: 'center' }}><a href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js">View source here</a></p>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <a href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js" style={{ marginRight: '1.5em' }}>View source code</a>
+        <div style={{ margin: '7px 0' }}><input type="checkbox" checked={useLottieLight} id="useLottieLight" onChange={e => setUseLottieLight(e.target.checked)} /> <label htmlFor="useLottieLight">Use lottie light?</label></div>
+      </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <MainTest />
-        <RangeTest />
-        <ScrollTest />
-        <LazyLoadTest />
-        <PathLoadTest />
+        <MainTest Component={Component} />
+        <RangeTest Component={Component} />
+        <ScrollTest Component={Component} />
+        <LazyLoadTest Component={Component} />
+        <PathLoadTest Component={Component} />
       </div>
     </>
   );  
 }
 
-export default App
+export default window.location.pathname.startsWith('/test') ? Test : App;
