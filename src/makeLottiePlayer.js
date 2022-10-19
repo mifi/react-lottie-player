@@ -13,6 +13,7 @@ const makeLottiePlayer = (lottie) => {
     direction,
     segments: segmentsIn,
     goTo,
+    useSubframes,
 
     renderer,
     loop,
@@ -177,6 +178,11 @@ const makeLottiePlayer = (lottie) => {
       else animRef.current.goToAndStop(goTo, isFrame)
     }, [goTo, play, ready])
 
+    useEffect(() => {
+      if (animRef.current.setSubframe) animRef.current.setSubframe(useSubframes)
+      // console.log(animRef.current.isSubframeEnabled)
+    }, [useSubframes])
+
     return (
       <div
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -196,6 +202,7 @@ const makeLottiePlayer = (lottie) => {
     speed: PropTypes.number,
     direction: PropTypes.number,
     loop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+    useSubframes: PropTypes.bool,
 
     segments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.bool]),
 
@@ -218,6 +225,7 @@ const makeLottiePlayer = (lottie) => {
     play: null,
     segments: null,
     goTo: null,
+    useSubframes: true,
 
     speed: 1,
     direction: 1,

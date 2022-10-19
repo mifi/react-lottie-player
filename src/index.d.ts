@@ -16,6 +16,7 @@ declare module 'react-lottie-player' {
       speed?: number
       direction?: AnimationDirection
       segments?: AnimationSegment | AnimationSegment[]
+      useSubframes?: boolean
 
       onComplete?: AnimationEventCallback
       onLoopComplete?: AnimationEventCallback

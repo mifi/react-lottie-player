@@ -8,7 +8,7 @@ import lottieJson from './26514-check-success-animation.json';
 
 const boxStyle = { boxShadow: '0 0 10px 10px rgba(0,0,0,0.03)', width: 200, maxWidth: '100%', margin: 30, padding: 30, borderRadius: 7, display: 'flex', flexDirection: 'column' };
 
-const ScrollTest = memo(({ Component }) => {
+const ScrollTest = memo(({ Component, useSubframes }) => {
   const scrollRef = useRef();
   const [animationPosition, setAnimationPosition] = useState(0);
 
@@ -34,13 +34,14 @@ const ScrollTest = memo(({ Component }) => {
       <Component
         animationData={lottieJson}
         goTo={animationPosition}
+        useSubframes={useSubframes}
         style={{ width: 150, height: 150, alignSelf: 'center', marginTop: 200, marginBottom: 300 }}
       />
     </div>
   )
 });
 
-const MainTest = memo(({ Component }) => {
+const MainTest = memo(({ Component, useSubframes }) => {
   const [segmentFrom, setSegmentFrom] = useState(0);
   const [segmentTo, setSegmentTo] = useState(70);
   const [segmentsEnabled, setSegmentsEnabled] = useState(false);
@@ -77,6 +78,7 @@ const MainTest = memo(({ Component }) => {
         animationData={lottieJson}
         direction={direction}
         segments={segmentsEnabled && segments}
+        useSubframes={useSubframes}
         style={{ width: 150, height: 150, marginBottom: 10, alignSelf: 'center' }}
         onComplete={() => addLog('complete')}
         onLoopComplete={() => addLog('loopComplete')}
@@ -133,7 +135,7 @@ const MainTest = memo(({ Component }) => {
   );
 });
 
-const RangeTest = memo(({ Component }) => {
+const RangeTest = memo(({ Component, useSubframes }) => {
   const [goTo, setGoTo] = useState(55);
   const [play, setPlay] = useState(false);
   const [mounted, setMounted] = useState(true);
@@ -147,6 +149,7 @@ const RangeTest = memo(({ Component }) => {
           <Component
             play={play}
             goTo={goTo}
+            useSubframes={useSubframes}
             animationData={lottieJson}
             style={{ width: 150, height: 150, marginBottom: 10 }}
           />
@@ -171,11 +174,12 @@ const RangeTest = memo(({ Component }) => {
   );
 });
 
-const PathLoadTest = ({ Component }) => (
+const PathLoadTest = ({ Component, useSubframes }) => (
   <div style={boxStyle}>
     <Component
       play
       loop
+      useSubframes={useSubframes}
       path={`${window.location.href}26514-check-success-animation.json`}
       style={{ width: 150, height: 150, marginBottom: 10 }}
     />
@@ -185,7 +189,7 @@ const PathLoadTest = ({ Component }) => (
 );
 
 
-const LazyLoadTest = memo(({ Component }) => {
+const LazyLoadTest = memo(({ Component, useSubframes }) => {
   const [animationData, setAnimationData] = useState();
 
   useEffect(() => {
@@ -200,6 +204,7 @@ const LazyLoadTest = memo(({ Component }) => {
         <Component
           play
           loop
+          useSubframes={useSubframes}
           animationData={animationData}
           style={{ width: 150, height: 150, marginBottom: 10 }}
         />
@@ -215,25 +220,27 @@ const LazyLoadTest = memo(({ Component }) => {
 
 const App = () => {
   const [useLottieLight, setUseLottieLight] = useState(false);
+  const [useSubframes, setUseSubframes] = useState();
 
   const Component = useLottieLight ? LottieLight : Lottie;
 
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>react-lottie-player Live Demo</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <a href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js" style={{ marginRight: '1.5em' }}>View source code</a>
-        <div style={{ margin: '7px 0' }}><input type="checkbox" checked={useLottieLight} id="useLottieLight" onChange={e => setUseLottieLight(e.target.checked)} /> <label htmlFor="useLottieLight">Use lottie light?</label></div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+        <a style={{ margin: '0 .5em' }} href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js">View source code</a>
+        <div style={{ margin: '0 .5em' }}><input type="checkbox" checked={useLottieLight} id="useLottieLight" onChange={e => setUseLottieLight(e.target.checked)} /> <label htmlFor="useLottieLight">Use lottie light?</label></div>
+        <div style={{ margin: '0 .5em' }}><input type="checkbox" checked={useSubframes != null ? useSubframes : true} id="useSubframes" onChange={e => setUseSubframes(e.target.checked)} /> <label htmlFor="useSubframes">Use subframes?</label></div>
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <MainTest Component={Component} />
-        <RangeTest Component={Component} />
-        <ScrollTest Component={Component} />
-        <LazyLoadTest Component={Component} />
-        <PathLoadTest Component={Component} />
+        <MainTest Component={Component} useSubframes={useSubframes} />
+        <RangeTest Component={Component} useSubframes={useSubframes} />
+        <ScrollTest Component={Component} useSubframes={useSubframes} />
+        <LazyLoadTest Component={Component} useSubframes={useSubframes} />
+        <PathLoadTest Component={Component} useSubframes={useSubframes} />
       </div>
     </>
-  );  
+  );
 }
 
 export default window.location.pathname.startsWith('/test') ? Test : App;
