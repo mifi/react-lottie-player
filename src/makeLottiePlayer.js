@@ -1,7 +1,8 @@
 import React, { memo, useRef, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal/es6/react'
 import clone from 'rfdc/default'
+
+import { propTypes, defaultProps } from './props'
 
 const makeLottiePlayer = (lottie) => {
   const Lottie = memo(({
@@ -192,56 +193,8 @@ const makeLottiePlayer = (lottie) => {
     )
   })
 
-  Lottie.propTypes = {
-    // You can use either animationData OR path
-    animationData: PropTypes.object,
-    path: PropTypes.string,
-
-    play: PropTypes.bool,
-    goTo: PropTypes.number,
-    speed: PropTypes.number,
-    direction: PropTypes.number,
-    loop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-    useSubframes: PropTypes.bool,
-
-    segments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.bool]),
-
-    rendererSettings: PropTypes.object,
-
-    renderer: PropTypes.string,
-
-    audioFactory: PropTypes.func,
-
-    onComplete: PropTypes.func,
-    onLoopComplete: PropTypes.func,
-    onEnterFrame: PropTypes.func,
-    onSegmentStart: PropTypes.func
-  }
-
-  Lottie.defaultProps = {
-    animationData: null,
-    path: null,
-
-    play: null,
-    segments: null,
-    goTo: null,
-    useSubframes: true,
-
-    speed: 1,
-    direction: 1,
-    loop: true,
-
-    rendererSettings: {},
-    renderer: 'svg',
-
-    audioFactory: null,
-
-    onLoad: () => {},
-    onComplete: () => {},
-    onLoopComplete: () => {},
-    onEnterFrame: () => {},
-    onSegmentStart: () => {}
-  }
+  Lottie.propTypes = propTypes
+  Lottie.defaultProps = defaultProps
 
   return Lottie
 }
