@@ -51,6 +51,7 @@ const MainTest = memo(({ Component, useSubframes }) => {
   const [speed, setSpeed] = useState(1);
   const [direction, setDirection] = useState(1);
   const segments = [segmentFrom, segmentTo];
+  const lottieRef = useRef();
 
   const [log, setLog] = useState([]);
   const addLog = (v) => setLog(l => [v, ...l]);
@@ -69,9 +70,14 @@ const MainTest = memo(({ Component, useSubframes }) => {
     return loopTimes;
   }
 
+  useEffect(() => {
+    console.log('Your lottie object', lottieRef.current);
+  }, [])
+
   return (
     <div style={boxStyle}>
       <Component
+        ref={lottieRef}
         loop={loop}
         speed={speed}
         play={play}

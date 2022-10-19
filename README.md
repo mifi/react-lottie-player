@@ -4,15 +4,17 @@ Fully declarative React Lottie player
 
 Inspired by [several](https://github.com/felippenardi/lottie-react-web) [existing](https://github.com/chenqingspring/react-lottie) [packages](https://github.com/Gamote/lottie-react) wrapping [lottie-web](https://github.com/airbnb/lottie-web) for React, I created this package because I wanted something that just works and is easy to use. None of the alternatives properly handle changes of props like playing/pausing/segments. This lead to lots of hacks to get the animations to play correctly.
 
-`react-lottie-player` is a complete rewrite using modern hooks 🎣 for more readable code, an easy to use, seamless and **fully declarative control of the lottie player**.
+`react-lottie-player` is a complete rewrite using hooks 🎣 for more readable code, easy to use, seamless and fully declarative control of the lottie player.
 
 ![Tests](https://github.com/mifi/react-lottie-player/workflows/Tests/badge.svg) [![NPM](https://img.shields.io/npm/v/react-lottie-player.svg)](https://www.npmjs.com/package/react-lottie-player) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Features
 
-- Fully declarative - handles state changes correctly
+- Fully declarative
+- Handles state changes correctly
 - Does not [leak memory like lottie-web](https://github.com/mifi/react-lottie-player/issues/35) if you use repeaters
-- LottiePlayerLight support (no `eval`)
+- [LottiePlayerLight](#lottieplayerlight) support (no `eval`)
+- Alternative imperative API using ref (use at your own risk)
 
 ## Install
 
@@ -24,10 +26,10 @@ npm install --save react-lottie-player
 
 ```jsx
 import React from 'react'
+
 import Lottie from 'react-lottie-player'
 // Alternatively:
 // import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
-
 
 import lottieJson from './my-lottie.json'
 
@@ -45,11 +47,13 @@ export default function Example() {
 
 ## Example
 
-[![](screenshot.png)](https://mifi.github.io/react-lottie-player/)
+<a href="https://mifi.github.io/react-lottie-player/">
+  <img src="screenshot.png" width="400" alt="Screenshot" />
+</a>
 
-[Open live example](https://mifi.github.io/react-lottie-player/)
+[🎛 Live demo](https://mifi.github.io/react-lottie-player/)
 
-[View example code](https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js)
+[👩🏿‍💻 Example code](example/src/App.js)
 
 ## Lazy loading example
 
@@ -66,6 +70,18 @@ const MyComponent = () => {
 }
 ```
 
+## Imperative API (ref)
+
+```js
+const lottieRef = useRef();
+
+useEffect(() => {
+  console.log(lottieRef.current.currentFrame);
+}, [])
+
+return <Lottie ref={lottieRef} />;
+```
+
 See also [#11](https://github.com/mifi/react-lottie-player/issues/11)
 
 ## LottiePlayerLight
@@ -74,7 +90,7 @@ The default lottie player uses `eval`. If you don't want eval to be used in your
 
 ## Lottie animation track scrolling div
 
-See [example/App.js](https://github.com/mifi/react-lottie-player/blob/master/example/src/App.js) (ScrollTest) in [live example](https://mifi.github.io/react-lottie-player/).
+See [example/App.js](example/src/App.js) (ScrollTest) in [live example](https://mifi.github.io/react-lottie-player/).
 
 ## Resize mode: cover
 
@@ -86,9 +102,7 @@ If you want the animation to fill the whole container, you can pass this prop. S
 
 ## API
 
-See https://github.com/airbnb/lottie-web
-
-[View PropTypes](https://github.com/mifi/react-lottie-player/blob/64eac186947be7ee5aad304ca4193c507ace8dc3/src/index.js#L147)
+See [PropTypes](src/props.js) and [lottie-web](https://github.com/airbnb/lottie-web).
 
 ## Releasing
 

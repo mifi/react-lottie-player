@@ -1,11 +1,11 @@
-import React, { memo, useRef, useEffect, useState } from 'react'
+import React, { memo, useRef, useEffect, useState, forwardRef, useCallback } from 'react'
 import equal from 'fast-deep-equal/es6/react'
 import clone from 'rfdc/default'
 
 import { propTypes, defaultProps } from './props'
 
-const makeLottiePlayer = (lottie) => {
-  const Lottie = memo(({
+const makeLottiePlayer = ({ loadAnimation }) => {
+  const Lottie = memo(forwardRef(({
     animationData,
     path,
 
@@ -29,7 +29,7 @@ const makeLottiePlayer = (lottie) => {
     onSegmentStart,
 
     ...props
-  }) => {
+  }, forwardedRef) => {
     const animElementRef = useRef()
     const animRef = useRef()
 
@@ -55,6 +55,11 @@ const makeLottiePlayer = (lottie) => {
     useEffect(() => () => animRef.current.removeEventListener('enterFrame', onEnterFrame), [onEnterFrame])
     useEffect(() => () => animRef.current.removeEventListener('segmentStart', onSegmentStart), [onSegmentStart])
 
+    const setLottieRefs = useCallback((newRef) => {
+      animRef.current = newRef
+      if (forwardedRef) forwardedRef.current = newRef
+    }, [])
+
     useEffect(() => {
       function parseAnimationData() {
         if (animationData == null || typeof animationData !== 'object') return animationData
@@ -69,7 +74,7 @@ const makeLottiePlayer = (lottie) => {
       }
 
       // console.log('init')
-      animRef.current = lottie.loadAnimation({
+      const lottie = loadAnimation({
         animationData: parseAnimationData(),
         path,
         container: animElementRef.current,
@@ -79,6 +84,7 @@ const makeLottiePlayer = (lottie) => {
         rendererSettings,
         audioFactory
       })
+      setLottieRefs(lottie)
 
       function onDomLoaded() {
         setReady(true)
@@ -90,7 +96,7 @@ const makeLottiePlayer = (lottie) => {
         animRef.current.removeEventListener('DOMLoaded', onDomLoaded)
         setReady(false)
         animRef.current.destroy()
-        animRef.current = undefined
+        setLottieRefs(undefined)
       }
     }, [loop, renderer, rendererSettings, animationData, path, audioFactory])
 
@@ -191,7 +197,7 @@ const makeLottiePlayer = (lottie) => {
         ref={animElementRef}
       />
     )
-  })
+  }))
 
   Lottie.propTypes = propTypes
   Lottie.defaultProps = defaultProps
