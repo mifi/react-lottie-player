@@ -55,10 +55,36 @@ export default function Example() {
 
 [👩🏿‍💻 Example code](example/src/App.js)
 
-## Lazy loading example
+## Lazy loading
+
+### Option 1: React code splitting (`React.lazy`)
+
+Extract your Lottie animation into a separate component, then lazy load it:
 
 ```js
-const MyComponent = () => {
+// MyLottieAnimation.js
+
+import Lottie from 'react-lottie-player';
+import animation from './animation.json';
+
+export default function MyLottieAnimation(props) {
+  return <Lottie animationData={animation} {...props} />;
+}
+
+// MyComponent.js
+
+import React from 'react';
+const MyLottieAnimation = React.lazy(() => import('./MyLottieAnimation'));
+
+export default function MyComponent() {
+  return <MyLottieAnimation play />;
+}
+```
+
+### Option 2: dynamic import with state
+
+```js
+const Example = () => {
   const [animationData, setAnimationData] = useState();
 
   useEffect(() => {
