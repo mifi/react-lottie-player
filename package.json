@@ -17,7 +17,7 @@
     "test": "npm run build && npm run test:unit",
     "lint": "eslint .",
     "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "predeploy": "cd example && yarn install && yarn run build",
+    "predeploy": "cd example && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
