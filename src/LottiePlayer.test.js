@@ -19,7 +19,7 @@ async function waitOnPort() {
       await got(`http://127.0.0.1:${port}/`);
       return;
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
       // retry
       // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
       await new Promise((resolve) => setTimeout(resolve, 200));
