@@ -33,14 +33,14 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "execa": "^5.0.0",
     "gh-pages": "^2.2.0",
+    "got": "^12.5.3",
     "jest-image-snapshot": "^6.1.0",
     "jest-puppeteer": "^6.2.0",
     "microbundle-crl": "^0.13.10",
     "puppeteer": "^19.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
-    "wait-on": "4"
+    "react-scripts": "^5.0.1"
   },
   "files": [
     "dist"

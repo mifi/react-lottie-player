@@ -1,5 +1,4 @@
 const execa = require('execa');
-const waitOn = require('wait-on');
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
 const detectPort = require('detect-port');
 
@@ -9,6 +8,21 @@ beforeAll(() => {
 
 const port = 3001;
 const baseUrl = `http://localhost:${port}`;
+
+async function waitOnPort() {
+  const { got } = await import('got');
+  for (;;) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      await got(`http://localhost:${port}/`);
+      return;
+    } catch (err) {
+      // retry
+      // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
+  }
+}
 
 describe('lottie player screenshots', () => {
   let craProcess;
@@ -21,7 +35,7 @@ describe('lottie player screenshots', () => {
     craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none', PORT: port, CI: 'true' }, stderr: 'inherit', stdout: 'inherit' });
     await Promise.race([
       craProcess,
-      waitOn({ resources: [baseUrl] }),
+      waitOnPort(port),
     ]);
   });
 
