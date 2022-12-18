@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Lottie from 'react-lottie-player';
-import LottieLight from 'react-lottie-player/dist/LottiePlayerLight';
+import LottieLight from 'react-lottie-player/dist/LottiePlayerLight.modern';
 
 import React, {
   useState, memo, useRef, useEffect,

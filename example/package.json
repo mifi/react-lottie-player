@@ -4,16 +4,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js start",
-    "build": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "eject": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js eject"
+    "start": "node ../node_modules/vite/bin/vite.js",
+    "build": "node ../node_modules/vite/bin/vite.js build"
   },
   "dependencies": {
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-lottie-player": "link:..",
-    "react-scripts": "link:../node_modules/react-scripts"
+    "react-lottie-player": "link:.."
   },
   "devDependencies": {},
   "browserslist": [

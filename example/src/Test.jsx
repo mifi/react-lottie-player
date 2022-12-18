@@ -1,5 +1,5 @@
 import Lottie from 'react-lottie-player';
-import LottieLight from 'react-lottie-player/dist/LottiePlayerLight';
+import LottieLight from 'react-lottie-player/dist/LottiePlayerLight.modern';
 
 import React from 'react';
 

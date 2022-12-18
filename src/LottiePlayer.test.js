@@ -1,25 +1,25 @@
 const execa = require('execa');
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
-const detectPort = require('detect-port');
 
 beforeAll(() => {
   expect.extend({ toMatchImageSnapshot });
 });
 
-const port = 3001;
+const port = 5173;
 const baseUrl = `http://localhost:${port}`;
 
 // `wait-on` doesn't seem to work on github actions https://github.com/jeffbski/wait-on/issues/86
+// also https://github.com/jeffbski/wait-on/issues/78
 async function waitOnPort() {
   // eslint-disable-next-line import/no-unresolved
   const { got } = await import('got');
   for (;;) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      await got(`http://127.0.0.1:${port}/`);
+      await got(`${baseUrl}/`, { headers: { accept: 'text/html' } });
       return;
     } catch (err) {
-      console.error(err.message);
+      // console.error(err.message);
       // retry
       // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -28,17 +28,15 @@ async function waitOnPort() {
 }
 
 describe('lottie player screenshots', () => {
-  let craProcess;
+  let viteProcess;
 
   jest.setTimeout(60000);
 
   beforeAll(async () => {
-    const detectedPort = await detectPort(port); // because react-scripts will ask interactive question if occupied
-    if (detectedPort !== port) throw new Error('Port is in use');
-    craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none', PORT: port, CI: 'true' }, stderr: 'inherit', stdout: 'inherit' });
+    viteProcess = execa('vite', { cwd: 'example', stderr: 'inherit', stdout: 'inherit' });
     await Promise.race([
-      craProcess,
-      waitOnPort(port),
+      viteProcess,
+      waitOnPort(),
     ]);
   });
 
@@ -75,7 +73,8 @@ describe('lottie player screenshots', () => {
     });
   });
 
-  afterAll(() => {
-    craProcess?.kill?.('SIGINT'); // todo doesn't seem to work
+  afterAll(async () => {
+    viteProcess?.kill?.('SIGINT');
+    await viteProcess.catch(() => {});
   });
 });
