@@ -40,7 +40,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "wait-on": "^5.2.1"
+    "wait-on": "4"
   },
   "files": [
     "dist"
