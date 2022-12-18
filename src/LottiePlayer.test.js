@@ -16,7 +16,7 @@ async function waitOnPort() {
   for (;;) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      await got(`http://localhost:${port}/`);
+      await got(`http://127.0.0.1:${port}/`);
       return;
     } catch (err) {
       console.error(err);
