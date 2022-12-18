@@ -18,7 +18,7 @@ describe('lottie player screenshots', () => {
   beforeAll(async () => {
     const detectedPort = await detectPort(port); // because react-scripts will ask interactive question if occupied
     if (detectedPort !== port) throw new Error('Port is in use');
-    craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none', PORT: port }, stderr: 'inherit', stdout: 'inherit' });
+    craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none', PORT: port, CI: 'true' }, stderr: 'inherit', stdout: 'inherit' });
     await Promise.race([
       craProcess,
       waitOn({ resources: [baseUrl] }),
