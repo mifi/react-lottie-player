@@ -1,12 +1,14 @@
 const execa = require('execa');
 const waitOn = require('wait-on');
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
+const detectPort = require('detect-port');
 
 beforeAll(() => {
   expect.extend({ toMatchImageSnapshot });
 });
 
-const baseUrl = 'http://localhost:3000';
+const port = 3000;
+const baseUrl = `http://localhost:${port}`;
 
 describe('lottie player screenshots', () => {
   let craProcess;
@@ -14,7 +16,9 @@ describe('lottie player screenshots', () => {
   jest.setTimeout(60000);
 
   beforeAll(async () => {
-    craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none' } });
+    const detectedPort = await detectPort(port); // because react-scripts will ask interactive question if occupied
+    if (detectedPort !== port) throw new Error('Port is in use');
+    craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none' }, stderr: 'inherit', stdout: 'inherit' });
     await Promise.race([
       craProcess,
       waitOn({ resources: [baseUrl] }),
@@ -55,6 +59,6 @@ describe('lottie player screenshots', () => {
   });
 
   afterAll(async () => {
-    craProcess.kill();
+    craProcess?.kill();
   });
 });

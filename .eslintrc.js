@@ -19,6 +19,7 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-one-expression-per-line': 0,
     'max-len': 0,
+    'object-curly-newline': 0,
   },
   overrides: [
     {
