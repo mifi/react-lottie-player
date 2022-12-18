@@ -9,7 +9,9 @@ beforeAll(() => {
 const port = 3001;
 const baseUrl = `http://localhost:${port}`;
 
+// `wait-on` doesn't seem to work on github actions https://github.com/jeffbski/wait-on/issues/86
 async function waitOnPort() {
+  // eslint-disable-next-line import/no-unresolved
   const { got } = await import('got');
   for (;;) {
     try {
