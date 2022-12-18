@@ -15,7 +15,10 @@ describe('lottie player screenshots', () => {
 
   beforeAll(async () => {
     craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none' } });
-    await waitOn({ resources: [baseUrl] });
+    await Promise.race([
+      craProcess,
+      waitOn({ resources: [baseUrl] }),
+    ]);
   });
 
   beforeEach(async () => {
