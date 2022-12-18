@@ -1,33 +1,31 @@
 module.exports = {
   extends: [
-    'standard',
-    'standard-react'
+    'airbnb',
+    'airbnb/hooks',
   ],
-  env: {
-    node: true
-  },
   parserOptions: {
-    ecmaVersion: 2022
+    ecmaVersion: 2022,
+  },
+  env: {
+    browser: true,
   },
   settings: {
     react: {
-      version: '16'
-    }
+      version: '18',
+    },
   },
   rules: {
-    'space-before-function-paren': 0,
     'react/prop-types': 0,
-    'react/jsx-handler-names': 0,
-    'react/jsx-fragments': 0,
-    'react/no-unused-prop-types': 0,
-    'import/export': 0
+    'react/jsx-filename-extension': 0,
+    'react/jsx-one-expression-per-line': 0,
+    'max-len': 0,
   },
   overrides: [
     {
       files: ['**/*.test.js'],
       env: {
-        jest: true
-      }
-    }
-  ]
-}
+        jest: true,
+      },
+    },
+  ],
+};

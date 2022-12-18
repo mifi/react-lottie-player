@@ -1,11 +1,11 @@
-import Lottie from 'react-lottie-player'
-import LottieLight from 'react-lottie-player/dist/LottiePlayerLight'
+import Lottie from 'react-lottie-player';
+import LottieLight from 'react-lottie-player/dist/LottiePlayerLight';
 
 import React from 'react';
 
 import lottieJson from './26514-check-success-animation.json';
 
-const Test = () => {
+function Test() {
   switch (window.location.pathname) {
     case '/test/1': return (
       <Lottie

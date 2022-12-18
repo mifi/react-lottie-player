@@ -1,4 +1,4 @@
-import lottie from 'lottie-web'
-import makeLottiePlayer from './makeLottiePlayer'
+import lottie from 'lottie-web';
+import makeLottiePlayer from './makeLottiePlayer';
 
-export default makeLottiePlayer(lottie)
+export default makeLottiePlayer(lottie);

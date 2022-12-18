@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import PropTypes from 'prop-types';
 
 export const propTypes = {
   // You can use either animationData OR path
@@ -23,8 +24,8 @@ export const propTypes = {
   onComplete: PropTypes.func,
   onLoopComplete: PropTypes.func,
   onEnterFrame: PropTypes.func,
-  onSegmentStart: PropTypes.func
-}
+  onSegmentStart: PropTypes.func,
+};
 
 export const defaultProps = {
   animationData: null,
@@ -48,5 +49,5 @@ export const defaultProps = {
   onComplete: () => {},
   onLoopComplete: () => {},
   onEnterFrame: () => {},
-  onSegmentStart: () => {}
-}
+  onSegmentStart: () => {},
+};

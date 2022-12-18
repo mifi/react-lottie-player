@@ -1,12 +1,17 @@
-import Lottie from 'react-lottie-player'
-import LottieLight from 'react-lottie-player/dist/LottiePlayerLight'
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import Lottie from 'react-lottie-player';
+import LottieLight from 'react-lottie-player/dist/LottiePlayerLight';
 
-import React, { useState, memo, useRef, useEffect } from 'react';
+import React, {
+  useState, memo, useRef, useEffect,
+} from 'react';
 import Test from './Test';
 
 import lottieJson from './26514-check-success-animation.json';
 
-const boxStyle = { boxShadow: '0 0 10px 10px rgba(0,0,0,0.03)', width: 200, maxWidth: '100%', margin: 30, padding: 30, borderRadius: 7, display: 'flex', flexDirection: 'column' };
+const boxStyle = {
+  boxShadow: '0 0 10px 10px rgba(0,0,0,0.03)', width: 200, maxWidth: '100%', margin: 30, padding: 30, borderRadius: 7, display: 'flex', flexDirection: 'column',
+};
 
 const ScrollTest = memo(({ Component, useSubframes }) => {
   const scrollRef = useRef();
@@ -16,7 +21,7 @@ const ScrollTest = memo(({ Component, useSubframes }) => {
     function handleScroll(e) {
       setAnimationPosition(Math.max((0, e.target.scrollTop - 50) * 0.3));
     }
-    const scroller = scrollRef.current
+    const scroller = scrollRef.current;
     scroller.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
@@ -35,11 +40,15 @@ const ScrollTest = memo(({ Component, useSubframes }) => {
         animationData={lottieJson}
         goTo={animationPosition}
         useSubframes={useSubframes}
-        style={{ width: 150, height: 150, alignSelf: 'center', marginTop: 200, marginBottom: 300 }}
+        style={{
+          width: 150, height: 150, alignSelf: 'center', marginTop: 200, marginBottom: 300,
+        }}
       />
     </div>
-  )
+  );
 });
+
+let logCounter = 0;
 
 const MainTest = memo(({ Component, useSubframes }) => {
   const [segmentFrom, setSegmentFrom] = useState(0);
@@ -54,7 +63,10 @@ const MainTest = memo(({ Component, useSubframes }) => {
   const lottieRef = useRef();
 
   const [log, setLog] = useState([]);
-  const addLog = (v) => setLog(l => [v, ...l]);
+  const addLog = (line) => {
+    setLog((existing) => [{ text: line, n: logCounter }, ...existing]);
+    logCounter += 1;
+  };
 
   function handleLoopTimesChange(e) {
     const { value } = e.target;
@@ -71,8 +83,9 @@ const MainTest = memo(({ Component, useSubframes }) => {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
     console.log('Your lottie object', lottieRef.current);
-  }, [])
+  }, []);
 
   return (
     <div style={boxStyle}>
@@ -85,7 +98,9 @@ const MainTest = memo(({ Component, useSubframes }) => {
         direction={direction}
         segments={segmentsEnabled && segments}
         useSubframes={useSubframes}
-        style={{ width: 150, height: 150, marginBottom: 10, alignSelf: 'center' }}
+        style={{
+          width: 150, height: 150, marginBottom: 10, alignSelf: 'center',
+        }}
         onComplete={() => addLog('complete')}
         onLoopComplete={() => addLog('loopComplete')}
         onEnterFrame={() => { /* addLog('enterFrame') */ }}
@@ -93,24 +108,38 @@ const MainTest = memo(({ Component, useSubframes }) => {
         onLoad={() => addLog('load')}
       />
 
-      <div style={{ margin: '7px 0' }}><input type="checkbox" checked={loop} onChange={e => setLoop(e.target.checked)} id="loop" /> <label htmlFor="loop">Loop</label></div>
+      <div style={{ margin: '7px 0' }}>
+        <input type="checkbox" checked={loop} onChange={(e) => setLoop(e.target.checked)} id="loop" />
+        {' '}
+        <label htmlFor="loop">Loop</label>
+      </div>
 
       <div style={{ margin: '7px 0' }}>
-        Loop times<br />
+        Loop times
+        <br />
         <input type="number" value={getLoopVal()} onChange={handleLoopTimesChange} />
       </div>
 
-      <div style={{ margin: '7px 0' }}><input type="checkbox" checked={play} onChange={e => setPlay(e.target.checked)} id="playing1" /> <label htmlFor="playing1">Playing</label></div>
+      <div style={{ margin: '7px 0' }}>
+        <input type="checkbox" checked={play} onChange={(e) => setPlay(e.target.checked)} id="playing1" />
+        {' '}
+        <label htmlFor="playing1">Playing</label>
+      </div>
 
       <div style={{ margin: '7px 0' }}>
-        <div style={{ marginBottom: 5 }}><input type="checkbox" checked={segmentsEnabled} onChange={e => setSegmentsEnabled(e.target.checked)} id="segmentsEnabled" /><label htmlFor="segmentsEnabled">Segments enabled</label></div>
-        <div style={{ marginLeft: 10 }}>
-          Segment from<br />
-          <input disabled={!segmentsEnabled} type="number" value={segmentFrom} onChange={e => setSegmentFrom(parseInt(e.target.value, 10))} />
+        <div style={{ marginBottom: 5 }}>
+          <input type="checkbox" checked={segmentsEnabled} onChange={(e) => setSegmentsEnabled(e.target.checked)} id="segmentsEnabled" />
+          <label htmlFor="segmentsEnabled">Segments enabled</label>
         </div>
         <div style={{ marginLeft: 10 }}>
-          Segment to<br />
-          <input disabled={!segmentsEnabled} type="number" value={segmentTo} onChange={e => setSegmentTo(parseInt(e.target.value, 10))} />
+          Segment from
+          <br />
+          <input disabled={!segmentsEnabled} type="number" value={segmentFrom} onChange={(e) => setSegmentFrom(parseInt(e.target.value, 10))} />
+        </div>
+        <div style={{ marginLeft: 10 }}>
+          Segment to
+          <br />
+          <input disabled={!segmentsEnabled} type="number" value={segmentTo} onChange={(e) => setSegmentTo(parseInt(e.target.value, 10))} />
         </div>
       </div>
 
@@ -128,14 +157,18 @@ const MainTest = memo(({ Component, useSubframes }) => {
       </div>
 
       <div style={{ margin: '10px 0' }}>
-        Direction<br />
+        Direction
+        <br />
         <input style={{ padding: 5, margin: 5, border: direction === -1 ? '2px solid black' : undefined }} type="button" value="-1" onClick={() => setDirection(-1)} />
         <input style={{ padding: 5, margin: 5, border: direction === 1 ? '2px solid black' : undefined }} type="button" value="1" onClick={() => setDirection(1)} />
       </div>
 
       <div>Event log</div>
-      <div style={{ height: 100, overflowY: 'scroll', background: 'rgba(0,0,0,0.03)', borderRadius: 5, padding: 10 }}>
-        {log.map((l, i) => <div key={i}>{l}</div>)}
+      <div style={{
+        height: 100, overflowY: 'scroll', background: 'rgba(0,0,0,0.03)', borderRadius: 5, padding: 10,
+      }}
+      >
+        {log.map(({ text, n }) => <div key={n}>{text}</div>)}
       </div>
     </div>
   );
@@ -148,7 +181,11 @@ const RangeTest = memo(({ Component, useSubframes }) => {
 
   return (
     <div style={boxStyle}>
-      <div style={{ margin: '7px 0' }}><input type="checkbox" checked={mounted} onChange={e => setMounted(e.target.checked)} id="mounted1" /> <label htmlFor="mounted1">Mounted</label></div>
+      <div style={{ margin: '7px 0' }}>
+        <input type="checkbox" checked={mounted} onChange={(e) => setMounted(e.target.checked)} id="mounted1" />
+        {' '}
+        <label htmlFor="mounted1">Mounted</label>
+      </div>
 
       {mounted && (
         <>
@@ -160,10 +197,14 @@ const RangeTest = memo(({ Component, useSubframes }) => {
             style={{ width: 150, height: 150, marginBottom: 10 }}
           />
 
-          <div style={{ margin: '10px 0' }}><input type="checkbox" checked={play} onChange={e => setPlay(e.target.checked)} id="playing2" /><label htmlFor="playing2">Playing</label></div>
+          <div style={{ margin: '10px 0' }}>
+            <input type="checkbox" checked={play} onChange={(e) => setPlay(e.target.checked)} id="playing2" />
+            <label htmlFor="playing2">Playing</label>
+          </div>
 
           <div style={{ margin: '10px 0' }}>
-            Controlled position<br />
+            Controlled position
+            <br />
             <input
               style={{ width: '100%' }}
               type="range"
@@ -180,20 +221,26 @@ const RangeTest = memo(({ Component, useSubframes }) => {
   );
 });
 
-const PathLoadTest = ({ Component, useSubframes }) => (
-  <div style={boxStyle}>
-    <Component
-      play
-      loop
-      useSubframes={useSubframes}
-      path={`${window.location.href}26514-check-success-animation.json`}
-      style={{ width: 150, height: 150, marginBottom: 10 }}
-    />
+function PathLoadTest({ Component, useSubframes }) {
+  return (
+    <div style={boxStyle}>
+      <Component
+        play
+        loop
+        useSubframes={useSubframes}
+        path={`${window.location.href}26514-check-success-animation.json`}
+        style={{ width: 150, height: 150, marginBottom: 10 }}
+      />
 
-  <p>Loaded with <b>path</b> URL</p>
-  </div>
-);
-
+      <p>
+        Loaded with
+        <b>path</b>
+        {' '}
+        URL
+      </p>
+    </div>
+  );
+}
 
 const LazyLoadTest = memo(({ Component, useSubframes }) => {
   const [animationData, setAnimationData] = useState();
@@ -218,13 +265,14 @@ const LazyLoadTest = memo(({ Component, useSubframes }) => {
         <div>Loading...</div>
       )}
 
-      <p>Lazy loaded with <b>import()</b></p>
+      <p>
+        Lazy loaded with <b>import()</b>
+      </p>
     </div>
   );
 });
 
-
-const App = () => {
+function App() {
   const [useLottieLight, setUseLottieLight] = useState(false);
   const [useSubframes, setUseSubframes] = useState();
 
@@ -233,10 +281,21 @@ const App = () => {
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>react-lottie-player Live Demo</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+      <div style={{
+        display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap',
+      }}
+      >
         <a style={{ margin: '0 .5em' }} href="https://github.com/mifi/react-lottie-player/blob/master/example/src/index.js">View source code</a>
-        <div style={{ margin: '0 .5em' }}><input type="checkbox" checked={useLottieLight} id="useLottieLight" onChange={e => setUseLottieLight(e.target.checked)} /> <label htmlFor="useLottieLight">Use lottie light?</label></div>
-        <div style={{ margin: '0 .5em' }}><input type="checkbox" checked={useSubframes != null ? useSubframes : true} id="useSubframes" onChange={e => setUseSubframes(e.target.checked)} /> <label htmlFor="useSubframes">Use subframes?</label></div>
+        <div style={{ margin: '0 .5em' }}>
+          <input type="checkbox" checked={useLottieLight} id="useLottieLight" onChange={(e) => setUseLottieLight(e.target.checked)} />
+          {' '}
+          <label htmlFor="useLottieLight">Use lottie light?</label>
+        </div>
+        <div style={{ margin: '0 .5em' }}>
+          <input type="checkbox" checked={useSubframes != null ? useSubframes : true} id="useSubframes" onChange={(e) => setUseSubframes(e.target.checked)} />
+          {' '}
+          <label htmlFor="useSubframes">Use subframes?</label>
+        </div>
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         <MainTest Component={Component} useSubframes={useSubframes} />
