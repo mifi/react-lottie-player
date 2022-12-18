@@ -4,23 +4,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
-    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+    "start": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "build": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js build",
+    "test": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js test",
+    "eject": "DISABLE_ESLINT_PLUGIN=true node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "react-lottie-player": "link:.."
+    "react-lottie-player": "link:..",
+    "react-scripts": "link:../node_modules/react-scripts"
   },
-  "devDependencies": {
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  "devDependencies": {},
   "browserslist": [
     ">0.2%",
     "not dead",

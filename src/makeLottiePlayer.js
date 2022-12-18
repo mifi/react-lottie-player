@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { memo, useRef, useEffect, useState, forwardRef, useCallback } from 'react'
 import equal from 'fast-deep-equal/es6/react'
 import clone from 'rfdc/default'
@@ -54,11 +55,12 @@ const makeLottiePlayer = ({ loadAnimation }) => {
     useEffect(() => () => animRef.current.removeEventListener('loopComplete', onLoopComplete), [onLoopComplete])
     useEffect(() => () => animRef.current.removeEventListener('enterFrame', onEnterFrame), [onEnterFrame])
     useEffect(() => () => animRef.current.removeEventListener('segmentStart', onSegmentStart), [onSegmentStart])
+    useEffect(() => () => animRef.current.removeEventListener('DOMLoaded', onLoad), [onLoad])
 
     const setLottieRefs = useCallback((newRef) => {
       animRef.current = newRef
       if (forwardedRef) forwardedRef.current = newRef
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
       function parseAnimationData() {
@@ -86,10 +88,8 @@ const makeLottiePlayer = ({ loadAnimation }) => {
       })
       setLottieRefs(lottie)
 
-      function onDomLoaded() {
-        setReady(true)
-        onLoad()
-      }
+      const onDomLoaded = () => setReady(true)
+
       animRef.current.addEventListener('DOMLoaded', onDomLoaded)
 
       return () => {
@@ -98,7 +98,11 @@ const makeLottiePlayer = ({ loadAnimation }) => {
         animRef.current.destroy()
         setLottieRefs(undefined)
       }
-    }, [loop, renderer, rendererSettings, animationData, path, audioFactory])
+    }, [loop, renderer, rendererSettings, animationData, path, audioFactory, setLottieRefs])
+
+    useEffect(() => {
+      animRef.current.addEventListener('DOMLoaded', onLoad)
+    }, [onLoad])
 
     useEffect(() => {
       animRef.current.addEventListener('complete', onComplete)
@@ -163,7 +167,7 @@ const makeLottiePlayer = ({ loadAnimation }) => {
       } else if (play === false) {
         animRef.current.pause()
       }
-    }, [play, segments, ready])
+    }, [play, segments, ready, direction])
 
     useEffect(() => {
       if (!ready) return

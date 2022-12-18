@@ -14,12 +14,9 @@
   "scripts": {
     "build": "rm -rf dist && microbundle-crl src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist && cp src/*.d.ts dist",
     "start": "rm -rf dist && microbundle-crl watch src/LottiePlayer.js src/LottiePlayerLight.js --no-compress --format modern,cjs -o dist",
-    "prepare": "run-s build",
-    "test": "run-s test:lint test:build test:unit",
-    "test:build": "run-s build",
-    "test:lint": "eslint .",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test": "npm run build && npm run test:unit",
+    "lint": "eslint .",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
@@ -27,25 +24,24 @@
     "react": "^16.0.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
-    "cross-env": "^7.0.2",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-config-standard-react": "^9.2.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint": "^8.30.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-react": "^13.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-standard": "^5.0.0",
     "execa": "^5.0.0",
     "gh-pages": "^2.2.0",
-    "jest-image-snapshot": "^4.3.0",
+    "jest-image-snapshot": "^6.1.0",
+    "jest-puppeteer": "^6.2.0",
     "microbundle-crl": "^0.13.10",
-    "npm-run-all": "^4.1.5",
-    "puppeteer": "^7.0.4",
+    "puppeteer": "^19.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "^5.0.1",
     "wait-on": "^5.2.1"
   },
   "files": [
@@ -55,5 +51,8 @@
     "fast-deep-equal": "^3.1.3",
     "lottie-web": "^5.7.6",
     "rfdc": "^1.3.0"
+  },
+  "jest": {
+    "preset": "jest-puppeteer"
   }
 }

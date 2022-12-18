@@ -1,8 +1,6 @@
-import puppeteer from 'puppeteer'
-import execa from 'execa'
-import waitOn from 'wait-on'
-
-import { toMatchImageSnapshot } from 'jest-image-snapshot'
+const execa = require('execa')
+const waitOn = require('wait-on')
+const { toMatchImageSnapshot } = require('jest-image-snapshot')
 
 beforeAll(() => {
   expect.extend({ toMatchImageSnapshot })
@@ -11,23 +9,24 @@ beforeAll(() => {
 const baseUrl = 'http://localhost:3000'
 
 describe('lottie player screenshots', () => {
-  let browser
   let craProcess
 
   jest.setTimeout(60000)
 
   beforeAll(async () => {
-    browser = await puppeteer.launch()
     craProcess = execa('npm start', { cwd: 'example', shell: true, env: { BROWSER: 'none' } })
     await waitOn({ resources: [baseUrl] })
   })
 
+  beforeEach(async () => {
+    await global.jestPuppeteer.resetPage()
+  })
+
   async function runScreenshotTest(path) {
-    const page = await browser.newPage()
-    await page.setViewport({ width: 150, height: 150 })
-    await page.goto(`${baseUrl}${path}`)
-    await page.waitForTimeout(500) // Sometimes page is white
-    const image = await page.screenshot()
+    await global.page.setViewport({ width: 150, height: 150 })
+    await global.page.goto(`${baseUrl}${path}`)
+    await global.page.waitForTimeout(500) // Sometimes global.page is white
+    const image = await global.page.screenshot()
 
     expect(image).toMatchImageSnapshot()
   }
@@ -53,7 +52,6 @@ describe('lottie player screenshots', () => {
   })
 
   afterAll(async () => {
-    await browser.close()
     craProcess.kill()
   })
 })
