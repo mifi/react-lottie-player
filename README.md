@@ -85,7 +85,7 @@ export default function MyComponent() {
 
 ```js
 const Example = () => {
-  const [animationData, setAnimationData] = useState();
+  const [animationData, setAnimationData] = useState<object>();
 
   useEffect(() => {
     import('./animation.json').then(setAnimationData);
