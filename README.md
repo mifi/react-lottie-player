@@ -53,7 +53,7 @@ export default function Example() {
 
 [🎛 Live demo](https://mifi.github.io/react-lottie-player/)
 
-[👩🏿‍💻 Example code](example/src/App.js)
+[👩🏿‍💻 Example code](example/src/App.jsx)
 
 ## Lazy loading
 
@@ -62,7 +62,7 @@ export default function Example() {
 Extract your Lottie animation into a separate component, then lazy load it:
 
 ```js
-// MyLottieAnimation.js
+// MyLottieAnimation.jsx
 
 import Lottie from 'react-lottie-player';
 import animation from './animation.json';
@@ -71,7 +71,7 @@ export default function MyLottieAnimation(props) {
   return <Lottie animationData={animation} {...props} />;
 }
 
-// MyComponent.js
+// MyComponent.jsx
 
 import React from 'react';
 const MyLottieAnimation = React.lazy(() => import('./MyLottieAnimation'));
@@ -116,7 +116,7 @@ The default lottie player uses `eval`. If you don't want eval to be used in your
 
 ## Lottie animation track scrolling div
 
-See [example/App.js](example/src/App.js) (ScrollTest) in [live example](https://mifi.github.io/react-lottie-player/).
+See [example/App.jsx](example/src/App.jsx) (ScrollTest) in [live example](https://mifi.github.io/react-lottie-player/).
 
 ## Resize mode: cover
 
