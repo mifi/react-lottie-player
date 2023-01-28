@@ -96,6 +96,12 @@ const Example = () => {
 }
 ```
 
+### Option 3: `path` URL
+
+```js
+const Example = () => <Lottie path="https://example.com/lottie.json" />;
+```
+
 ## Imperative API (ref)
 
 ```js
