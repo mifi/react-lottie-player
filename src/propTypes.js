@@ -13,10 +13,7 @@ export default {
   loop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   useSubframes: PropTypes.bool,
 
-  segments: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.number),
-    PropTypes.bool,
-  ]),
+  segments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.bool]),
 
   rendererSettings: PropTypes.object,
 
