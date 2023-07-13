@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 
-export const propTypes = {
+export default {
   // You can use either animationData OR path
   animationData: PropTypes.object,
   path: PropTypes.string,
@@ -13,7 +13,10 @@ export const propTypes = {
   loop: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   useSubframes: PropTypes.bool,
 
-  segments: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.bool]),
+  segments: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.bool,
+  ]),
 
   rendererSettings: PropTypes.object,
 
@@ -25,29 +28,4 @@ export const propTypes = {
   onLoopComplete: PropTypes.func,
   onEnterFrame: PropTypes.func,
   onSegmentStart: PropTypes.func,
-};
-
-export const defaultProps = {
-  animationData: null,
-  path: null,
-
-  play: null,
-  segments: null,
-  goTo: null,
-  useSubframes: true,
-
-  speed: 1,
-  direction: 1,
-  loop: true,
-
-  rendererSettings: {},
-  renderer: 'svg',
-
-  audioFactory: null,
-
-  onLoad: () => {},
-  onComplete: () => {},
-  onLoopComplete: () => {},
-  onEnterFrame: () => {},
-  onSegmentStart: () => {},
 };
