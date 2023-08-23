@@ -7,8 +7,8 @@ import clone from 'rfdc/default';
 
 import propTypes from './propTypes';
 
-const emptyObject = {}
-const noOp = () => {}
+const emptyObject = {};
+const noOp = () => {};
 
 const makeLottiePlayer = ({ loadAnimation }) => {
   const Lottie = memo(forwardRef((params, forwardedRef) => {
