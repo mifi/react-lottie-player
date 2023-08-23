@@ -5,34 +5,38 @@ import React, {
 import equal from 'fast-deep-equal/es6/react';
 import clone from 'rfdc/default';
 
-import { propTypes, defaultProps } from './props';
+import propTypes from './propTypes';
+
+const emptyObject = {};
+const noOp = () => {};
 
 const makeLottiePlayer = ({ loadAnimation }) => {
-  const Lottie = memo(forwardRef(({
-    animationData,
-    path,
+  const Lottie = memo(forwardRef((params, forwardedRef) => {
+    const {
+      animationData = null,
+      path = null,
 
-    play,
-    speed,
-    direction,
-    segments: segmentsIn,
-    goTo,
-    useSubframes,
+      play = null,
+      speed = 1,
+      direction = 1,
+      segments: segmentsIn = null,
+      goTo = null,
+      useSubframes = true,
 
-    renderer,
-    loop,
-    rendererSettings: rendererSettingsIn,
+      renderer = 'svg',
+      loop = true,
+      rendererSettings: rendererSettingsIn = emptyObject,
 
-    audioFactory,
+      audioFactory = null,
 
-    onLoad,
-    onComplete,
-    onLoopComplete,
-    onEnterFrame,
-    onSegmentStart,
+      onLoad = noOp,
+      onComplete = noOp,
+      onLoopComplete = noOp,
+      onEnterFrame = noOp,
+      onSegmentStart = noOp,
+      ...props
+    } = params;
 
-    ...props
-  }, forwardedRef) => {
     const animElementRef = useRef();
     const animRef = useRef();
 
@@ -207,7 +211,6 @@ const makeLottiePlayer = ({ loadAnimation }) => {
   }));
 
   Lottie.propTypes = propTypes;
-  Lottie.defaultProps = defaultProps;
 
   return Lottie;
 };
