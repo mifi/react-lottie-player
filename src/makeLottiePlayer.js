@@ -7,6 +7,9 @@ import clone from 'rfdc/default';
 
 import propTypes from './propTypes';
 
+const emptyObject = {}
+const noOp = () => {}
+
 const makeLottiePlayer = ({ loadAnimation }) => {
   const Lottie = memo(forwardRef((params, forwardedRef) => {
     const {
@@ -22,15 +25,15 @@ const makeLottiePlayer = ({ loadAnimation }) => {
 
       renderer = 'svg',
       loop = true,
-      rendererSettings: rendererSettingsIn = {},
+      rendererSettings: rendererSettingsIn = emptyObject,
 
       audioFactory = null,
 
-      onLoad = () => {},
-      onComplete = () => {},
-      onLoopComplete = () => {},
-      onEnterFrame = () => {},
-      onSegmentStart = () => {},
+      onLoad = noOp,
+      onComplete = noOp,
+      onLoopComplete = noOp,
+      onEnterFrame = noOp,
+      onSegmentStart = noOp,
       ...props
     } = params;
 
