@@ -1,3 +1,5 @@
+// @ts-check
+/// <reference types="./index" />
 // eslint-disable-next-line no-unused-vars
 import React, {
   memo, useRef, useEffect, useState, forwardRef, useCallback,
@@ -10,8 +12,17 @@ import propTypes from './propTypes';
 const emptyObject = {};
 const noOp = () => {};
 
+/**
+ * @param {import('lottie-web').LottiePlayer} args
+ * @returns {React.FC<import('react-lottie-player').LottieProps>}
+ */
 const makeLottiePlayer = ({ loadAnimation }) => {
-  const Lottie = memo(forwardRef((params, forwardedRef) => {
+  const Lottie = memo(forwardRef((
+    /** @type {import('react-lottie-player').LottieProps} */
+    params,
+    /** @type {React.ForwardedRef<import('lottie-web').AnimationItem>} */
+    forwardedRef,
+  ) => {
     const {
       animationData = null,
       path = null,
@@ -23,10 +34,10 @@ const makeLottiePlayer = ({ loadAnimation }) => {
       goTo = null,
       useSubframes = true,
 
+      // props picked to match from Lottie's config
       renderer = 'svg',
       loop = true,
       rendererSettings: rendererSettingsIn = emptyObject,
-
       audioFactory = null,
 
       onLoad = noOp,
@@ -34,10 +45,14 @@ const makeLottiePlayer = ({ loadAnimation }) => {
       onLoopComplete = noOp,
       onEnterFrame = noOp,
       onSegmentStart = noOp,
+
+      // htmlProps remain and will pass on to the div element
       ...props
     } = params;
 
+    /** @type {React.MutableRefObject<HTMLDivElement | undefined>} */
     const animElementRef = useRef();
+    /** @type {React.MutableRefObject<import('lottie-web').AnimationItem | undefined>} */
     const animRef = useRef();
 
     const [ready, setReady] = useState(false);
@@ -65,9 +80,13 @@ const makeLottiePlayer = ({ loadAnimation }) => {
 
     const setLottieRefs = useCallback((newRef) => {
       animRef.current = newRef;
-      // eslint-disable-next-line no-param-reassign
-      if (forwardedRef) forwardedRef.current = newRef;
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+      if (typeof forwardedRef === 'function') {
+        forwardedRef(newRef);
+      } else if (forwardedRef !== undefined && forwardedRef !== null) {
+        // eslint-disable-next-line no-param-reassign -- mutating a ref is intended
+        forwardedRef.current = newRef;
+      }
+    }, [forwardedRef]);
 
     useEffect(() => {
       function parseAnimationData() {
