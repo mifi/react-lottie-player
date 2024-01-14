@@ -9,6 +9,11 @@ node_modules
 !.yarn/plugins
 .pnp.*
 
+example/.yarn/*
+!example/.yarn/releases
+!example/.yarn/plugins
+example/.pnp.*
+
 # builds
 dist
 .rpt2_cache
