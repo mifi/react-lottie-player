@@ -4,6 +4,11 @@
 # dependencies
 node_modules
 
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
+
 # builds
 dist
 .rpt2_cache

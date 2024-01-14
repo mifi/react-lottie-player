@@ -53,5 +53,6 @@
   },
   "jest": {
     "preset": "jest-puppeteer"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }
