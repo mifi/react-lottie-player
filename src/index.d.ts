@@ -3,15 +3,16 @@ declare module 'react-lottie-player' {
     AnimationConfig,
     AnimationDirection,
     AnimationEventCallback,
+    AnimationItem,
     AnimationSegment,
     RendererType
   } from 'lottie-web'
 
-  export type LottieProps = React.DetailedHTMLProps<
+  export type LottieProps = React.PropsWithoutRef<React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
-  > &
-    Partial<Pick<AnimationConfig<RendererType>, 'loop' | 'renderer' | 'rendererSettings' | 'audioFactory'>> & {
+  >> &
+    Partial<Pick<AnimationConfig<RendererType>, 'path', 'animationData', 'loop' | 'renderer' | 'rendererSettings' | 'audioFactory'>> & {
       play?: boolean
       goTo?: number
       speed?: number
@@ -23,6 +24,9 @@ declare module 'react-lottie-player' {
       onLoopComplete?: AnimationEventCallback
       onEnterFrame?: AnimationEventCallback
       onSegmentStart?: AnimationEventCallback
+
+      /** Lottie `AnimationItem` Instance */
+      ref?: React.Ref<AnimationItem | undefined>
     } & ({ path?: string } | { animationData?: object })
 
   const Lottie: React.FC<LottieProps>
