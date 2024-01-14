@@ -12,13 +12,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - run: corepack enable
           
-      - env:
-          # https://github.com/actions/setup-node/issues/531#issuecomment-1820618025
-          SKIP_YARN_COREPACK_CHECK: true
-        run: |
-          yarn
-          (cd example && yarn)
+      - run: yarn
+      - run: (cd example && yarn)
 
 #      - uses: mxschmitt/action-tmate@v3
 
