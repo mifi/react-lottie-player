@@ -13,12 +13,12 @@ jobs:
         with:
           node-version: 20
           
-      - run: yarn
-        env:
+      - env:
           # https://github.com/actions/setup-node/issues/531#issuecomment-1820618025
           SKIP_YARN_COREPACK_CHECK: true
-
-      - run: (cd example && yarn)
+        run: |
+          yarn
+          (cd example && yarn)
 
 #      - uses: mxschmitt/action-tmate@v3
 
