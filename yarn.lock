@@ -10656,8 +10656,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^4.4.7":
-  version: 4.4.12
-  resolution: "vite@npm:4.4.12"
+  version: 4.5.2
+  resolution: "vite@npm:4.5.2"
   dependencies:
     esbuild: "npm:^0.18.10"
     fsevents: "npm:~2.3.2"
@@ -10691,7 +10691,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: ec38df585b814df883f6c7d42507cc5e5ac02de95635ef587530027892015bd9a8d66e7319dc37f3087a1ce2ffeab5d640da1be493bc68011f9323b10de7e954
+  checksum: 68969ccf72ad2078aec7d9e023fce6de03746a4761f9308924212fff7bd42487145b270166cec66cddacfd7b1315ec5aa39ead174fbd7fcd463637a96ff4c9d1
   languageName: node
   linkType: hard
 
