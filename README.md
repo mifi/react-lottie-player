@@ -134,7 +134,7 @@ If you want the animation to fill the whole container, you can pass this prop. S
 
 ## API
 
-See [PropTypes](src/props.js) and [lottie-web](https://github.com/airbnb/lottie-web).
+See [type definitions](src/index.d.ts) and [lottie-web](https://github.com/airbnb/lottie-web).
 
 ## Releasing
 
