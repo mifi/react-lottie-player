@@ -1,5 +1,7 @@
-import execa from 'execa';
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const execa = require('execa');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { toMatchImageSnapshot } = require('jest-image-snapshot');
 
 beforeAll(() => {
   expect.extend({ toMatchImageSnapshot });
