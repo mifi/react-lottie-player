@@ -1,6 +1,7 @@
 // @ts-check
 /// <reference types="./index" />
-import {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, {
   memo, useRef, useEffect, useState, forwardRef, useCallback,
 } from 'react';
 import equal from 'fast-deep-equal/es6/react';
