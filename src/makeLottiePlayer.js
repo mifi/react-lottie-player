@@ -1,13 +1,11 @@
 // @ts-check
 /// <reference types="./index" />
-// eslint-disable-next-line no-unused-vars
 import React, {
   memo, useRef, useEffect, useState, forwardRef, useCallback,
 } from 'react';
 import equal from 'fast-deep-equal/es6/react';
+// @ts-expect-error todo
 import clone from 'rfdc/default';
-
-import propTypes from './propTypes';
 
 const emptyObject = {};
 const noOp = () => {};
@@ -20,13 +18,10 @@ const makeLottiePlayer = ({ loadAnimation }) => {
   const Lottie = memo(forwardRef((
     /** @type {import('react-lottie-player').LottieProps} */
     params,
-    /** @type {React.ForwardedRef<import('lottie-web').AnimationItem>} */
+    /** @type {React.ForwardedRef<import('lottie-web').AnimationItem | undefined>} */
     forwardedRef,
   ) => {
     const {
-      animationData = null,
-      path = null,
-
       play = null,
       speed = 1,
       direction = 1,
@@ -38,7 +33,7 @@ const makeLottiePlayer = ({ loadAnimation }) => {
       renderer = 'svg',
       loop = true,
       rendererSettings: rendererSettingsIn = emptyObject,
-      audioFactory = null,
+      audioFactory,
 
       onLoad = noOp,
       onComplete = noOp,
@@ -50,10 +45,29 @@ const makeLottiePlayer = ({ loadAnimation }) => {
       ...props
     } = params;
 
-    /** @type {React.MutableRefObject<HTMLDivElement | undefined>} */
-    const animElementRef = useRef();
+    /** @type {import('react-lottie-player').LottieProps} */
+    let propsFiltered = props;
+    /** @type {object | undefined} */
+    let animationData;
+    /** @type {string | undefined} */
+    let path;
+
+    if ('animationData' in props) {
+      ({ animationData, ...propsFiltered } = props);
+    }
+    if ('path' in props) {
+      ({ path, ...propsFiltered } = props);
+    }
+
+    /** @type {React.MutableRefObject<HTMLDivElement | null>} */
+    const animElementRef = useRef(null);
     /** @type {React.MutableRefObject<import('lottie-web').AnimationItem | undefined>} */
     const animRef = useRef();
+
+    const getAnim = useCallback(() => {
+      if (animRef.current == null) throw new Error('Lottie ref is not set');
+      return animRef.current;
+    }, []);
 
     const [ready, setReady] = useState(false);
 
@@ -72,13 +86,13 @@ const makeLottiePlayer = ({ loadAnimation }) => {
     }, [rendererSettingsIn, rendererSettings]);
 
     // In order to remove listeners before animRef gets destroyed:
-    useEffect(() => () => animRef.current.removeEventListener('complete', onComplete), [onComplete]);
-    useEffect(() => () => animRef.current.removeEventListener('loopComplete', onLoopComplete), [onLoopComplete]);
-    useEffect(() => () => animRef.current.removeEventListener('enterFrame', onEnterFrame), [onEnterFrame]);
-    useEffect(() => () => animRef.current.removeEventListener('segmentStart', onSegmentStart), [onSegmentStart]);
-    useEffect(() => () => animRef.current.removeEventListener('DOMLoaded', onLoad), [onLoad]);
+    useEffect(() => () => getAnim().removeEventListener('complete', onComplete), [getAnim, onComplete]);
+    useEffect(() => () => getAnim().removeEventListener('loopComplete', onLoopComplete), [getAnim, onLoopComplete]);
+    useEffect(() => () => getAnim().removeEventListener('enterFrame', onEnterFrame), [getAnim, onEnterFrame]);
+    useEffect(() => () => getAnim().removeEventListener('segmentStart', onSegmentStart), [getAnim, onSegmentStart]);
+    useEffect(() => () => getAnim().removeEventListener('DOMLoaded', onLoad), [getAnim, onLoad]);
 
-    const setLottieRefs = useCallback((newRef) => {
+    const setLottieRefs = useCallback((/** @type {import('lottie-web').AnimationItem | undefined} */ newRef) => {
       animRef.current = newRef;
       if (typeof forwardedRef === 'function') {
         forwardedRef(newRef);
@@ -94,12 +108,14 @@ const makeLottiePlayer = ({ loadAnimation }) => {
 
         // https://github.com/mifi/react-lottie-player/issues/11#issuecomment-879310039
         // https://github.com/chenqingspring/vue-lottie/issues/20
-        if (typeof animationData.default === 'object') {
+        if ('default' in animationData && typeof animationData.default === 'object') {
           return clone(animationData.default);
         }
         // cloneDeep to prevent memory leak. See #35
         return clone(animationData);
       }
+
+      if (animElementRef.current == null) throw new Error('animElementRef is not set');
 
       // console.log('init')
       const lottie = loadAnimation({
@@ -110,46 +126,46 @@ const makeLottiePlayer = ({ loadAnimation }) => {
         loop: false,
         autoplay: false, // We want to explicitly control playback
         rendererSettings,
-        audioFactory,
+        ...(audioFactory ? { audioFactory } : {}),
       });
       setLottieRefs(lottie);
 
       const onDomLoaded = () => setReady(true);
 
-      animRef.current.addEventListener('DOMLoaded', onDomLoaded);
+      getAnim().addEventListener('DOMLoaded', onDomLoaded);
 
       return () => {
-        animRef.current.removeEventListener('DOMLoaded', onDomLoaded);
+        getAnim().removeEventListener('DOMLoaded', onDomLoaded);
         setReady(false);
-        animRef.current.destroy();
+        getAnim().destroy();
         setLottieRefs(undefined);
       };
-    }, [loop, renderer, rendererSettings, animationData, path, audioFactory, setLottieRefs]);
+    }, [loop, renderer, rendererSettings, animationData, path, audioFactory, setLottieRefs, getAnim]);
 
     useEffect(() => {
-      animRef.current.addEventListener('DOMLoaded', onLoad);
-    }, [onLoad]);
+      getAnim().addEventListener('DOMLoaded', onLoad);
+    }, [getAnim, onLoad]);
 
     useEffect(() => {
-      animRef.current.addEventListener('complete', onComplete);
-    }, [onComplete]);
+      getAnim().addEventListener('complete', onComplete);
+    }, [getAnim, onComplete]);
 
     useEffect(() => {
-      animRef.current.addEventListener('loopComplete', onLoopComplete);
-    }, [onLoopComplete]);
+      getAnim().addEventListener('loopComplete', onLoopComplete);
+    }, [getAnim, onLoopComplete]);
 
     useEffect(() => {
-      animRef.current.addEventListener('enterFrame', onEnterFrame);
-    }, [onEnterFrame]);
+      getAnim().addEventListener('enterFrame', onEnterFrame);
+    }, [getAnim, onEnterFrame]);
 
     useEffect(() => {
-      animRef.current.addEventListener('segmentStart', onSegmentStart);
-    }, [onSegmentStart]);
+      getAnim().addEventListener('segmentStart', onSegmentStart);
+    }, [getAnim, onSegmentStart]);
 
     useEffect(() => {
       if (!ready) return;
-      animRef.current.loop = loop;
-    }, [ready, loop]);
+      getAnim().loop = loop;
+    }, [ready, loop, getAnim]);
 
     const wasPlayingSegmentsRef = useRef(false);
 
@@ -158,21 +174,25 @@ const makeLottiePlayer = ({ loadAnimation }) => {
 
       // Without this code, when playback restarts, it will not play in reverse:
       // https://github.com/mifi/react-lottie-player/issues/19
-      function playReverse(lastFrame) {
-        animRef.current.goToAndPlay(lastFrame, true);
-        animRef.current.setDirection(direction);
+      function playReverse(/** @type {number} */ lastFrame) {
+        getAnim().goToAndPlay(lastFrame, true);
+        getAnim().setDirection(direction);
       }
 
       if (play === true) {
         const force = true;
         if (segments) {
-          animRef.current.playSegments(segments, force);
+          getAnim().playSegments(segments, force);
           wasPlayingSegmentsRef.current = true;
 
           // This needs to be called after playSegments or it will not play backwards
           if (direction === -1) {
             // TODO What if more than one segment
-            const lastFrame = segments[1];
+            let lastFrame;
+            // eslint-disable-next-line prefer-destructuring
+            if (typeof segments[1] === 'number') lastFrame = segments[1];
+            // eslint-disable-next-line prefer-destructuring
+            else lastFrame = segments[1][1];
             playReverse(lastFrame);
           }
         } else {
@@ -180,56 +200,54 @@ const makeLottiePlayer = ({ loadAnimation }) => {
           // Need to reset segments or else it will still play the old segments also when calling play()
           // wasPlayingSegmentsRef: Only reset segments if playSegments last time, because resetSegments will also reset playback position
           // https://github.com/airbnb/lottie-web/blob/master/index.d.ts
-          if (wasPlayingSegmentsRef.current) animRef.current.resetSegments(force);
+          if (wasPlayingSegmentsRef.current) getAnim().resetSegments(force);
           wasPlayingSegmentsRef.current = false;
 
           if (direction === -1) {
-            const lastFrame = animRef.current.getDuration(true);
+            const lastFrame = getAnim().getDuration(true);
             playReverse(lastFrame);
           } else {
-            animRef.current.play();
+            getAnim().play();
           }
         }
       } else if (play === false) {
-        animRef.current.pause();
+        getAnim().pause();
       }
-    }, [play, segments, ready, direction]);
+    }, [play, segments, ready, direction, getAnim]);
 
     useEffect(() => {
       if (!ready) return;
       if (Number.isNaN(speed)) return;
-      animRef.current.setSpeed(speed);
-    }, [speed, ready]);
+      getAnim().setSpeed(speed);
+    }, [speed, ready, getAnim]);
 
     // This handles the case where only direction has changed (direction is not a dependency of the other effect that calls setDirection)
     useEffect(() => {
       if (!ready) return;
-      animRef.current.setDirection(direction);
-    }, [direction, ready]);
+      getAnim().setDirection(direction);
+    }, [direction, getAnim, ready]);
 
     useEffect(() => {
       if (!ready) return;
       if (goTo == null) return;
       const isFrame = true; // TODO
-      if (play) animRef.current.goToAndPlay(goTo, isFrame);
-      else animRef.current.goToAndStop(goTo, isFrame);
-    }, [goTo, play, ready]);
+      if (play) getAnim().goToAndPlay(goTo, isFrame);
+      else getAnim().goToAndStop(goTo, isFrame);
+    }, [getAnim, goTo, play, ready]);
 
     useEffect(() => {
-      if (animRef.current.setSubframe) animRef.current.setSubframe(useSubframes);
-      // console.log(animRef.current.isSubframeEnabled)
-    }, [useSubframes]);
+      if (getAnim().setSubframe) getAnim().setSubframe(useSubframes);
+      // console.log(getAnim().isSubframeEnabled)
+    }, [getAnim, useSubframes]);
 
     return (
       <div
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        {...propsFiltered}
         ref={animElementRef}
       />
     );
   }));
-
-  Lottie.propTypes = propTypes;
 
   return Lottie;
 };

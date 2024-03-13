@@ -21,6 +21,7 @@ jobs:
 #      - uses: mxschmitt/action-tmate@v3
 
       - run: npm run build
+      - run: npm run tsc
       - run: npm run lint
       - run: npm test
       - run: npm run predeploy

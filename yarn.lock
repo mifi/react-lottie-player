@@ -2858,6 +2858,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsconfig/strictest@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@tsconfig/strictest@npm:2.0.3"
+  checksum: a26be4aed831c59b6b362608f34c6f0b2427dc08031176d825e46079090b9e48aa5ff71647b762a9a7009cb898af9b6cd24a195d268e9486fffa93de99de08c6
+  languageName: node
+  linkType: hard
+
+"@tsconfig/vite-react@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@tsconfig/vite-react@npm:3.0.1"
+  checksum: 73da98de378e93ef4d18f3c98b86bab759a642ade226a72e837f270159dccfddd644473c257b36b3a0adf1049b0559d02e813f5f1e6d644e099de48c9f2fa09f
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.1.20
   resolution: "@types/babel__core@npm:7.1.20"
@@ -2996,10 +3010,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prop-types@npm:*":
+  version: 15.7.11
+  resolution: "@types/prop-types@npm:15.7.11"
+  checksum: e53423cf9d510515ef8b47ff42f4f1b65a7b7b37c8704e2dbfcb9a60defe0c0e1f3cb1acfdeb466bad44ca938d7c79bffdd51b48ffb659df2432169d0b27a132
+  languageName: node
+  linkType: hard
+
 "@types/q@npm:^1.5.1":
   version: 1.5.4
   resolution: "@types/q@npm:1.5.4"
   checksum: 764e99b9d2589598493b5737d50a3d1e15093f796f3bd76f45a7275dcf074354276d80af24313957bc1f2f516fa4236a63c5064bea1102ec89105e0176d676a2
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18":
+  version: 18.2.65
+  resolution: "@types/react@npm:18.2.65"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/scheduler": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 91158b5a9e90489a5984bb610c3692001ecdf1d286c78384252698bcb306ef88e9434e75f01bf7739017e949e7690b7d6f1b7ef9d7097f86f3f649482a33604b
   languageName: node
   linkType: hard
 
@@ -3009,6 +3041,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: ead6902f01e7240918e6f6dabf0e2bc37035492b1da16f605bbd1e153c17d0639df77981b2ec042480361be76c9e967543287d9b312cd668ed9123524994c344
+  languageName: node
+  linkType: hard
+
+"@types/scheduler@npm:*":
+  version: 0.16.8
+  resolution: "@types/scheduler@npm:0.16.8"
+  checksum: f86de504945b8fc41b1f391f847444d542e2e4067cf7e5d9bfeb5d2d2393d3203b1161bc0ef3b1e104d828dabfb60baf06e8d2c27e27ff7e8258e6e618d8c4ec
   languageName: node
   linkType: hard
 
@@ -4313,6 +4352,13 @@ __metadata:
   dependencies:
     css-tree: "npm:1.0.0-alpha.39"
   checksum: b2048a84d24ae51bde56653843f996ca41b553358c365a3fdb077444177039f8cd7e225f058ed6a0589f4ad0d03baebb3a3362ee6de3680addf0fe0c3e8c8e56
+  languageName: node
+  linkType: hard
+
+"csstype@npm:^3.0.2":
+  version: 3.1.3
+  resolution: "csstype@npm:3.1.3"
+  checksum: 80c089d6f7e0c5b2bd83cf0539ab41474198579584fa10d86d0cafe0642202343cbc119e076a0b1aece191989477081415d66c9fefbf3c957fc2fc4b7009f248
   languageName: node
   linkType: hard
 
@@ -7482,10 +7528,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lottie-web@npm:^5.7.6":
-  version: 5.7.6
-  resolution: "lottie-web@npm:5.7.6"
-  checksum: a50d5d8cce704f636415fbf4117366f7a8aa3ddf40f92110d679409076ccf4fb81063d5f95066c8549ee6740fae35e64bac9a49bafea04cc8057fb68236ce1f1
+"lottie-web@npm:^5.12.2":
+  version: 5.12.2
+  resolution: "lottie-web@npm:5.12.2"
+  checksum: 0aeaf631b10a76afd025df70c2a1486543530708e07a316946c08e55891dac483ffbaf2bf3648ae0b9c54c733118a0a086fd150aa76f7848606214c67ad72c30
   languageName: node
   linkType: hard
 
@@ -9151,6 +9197,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-lottie-player@workspace:."
   dependencies:
+    "@tsconfig/strictest": "npm:^2.0.3"
+    "@tsconfig/vite-react": "npm:^3.0.1"
+    "@types/react": "npm:18"
     "@vitejs/plugin-react": "npm:^4.0.3"
     eslint: "npm:^7.32.0 || ^8.2.0"
     eslint-config-airbnb: "npm:^19.0.4"
@@ -9165,12 +9214,13 @@ __metadata:
     jest: "npm:^29.3.1"
     jest-image-snapshot: "npm:^6.1.0"
     jest-puppeteer: "npm:^6.2.0"
-    lottie-web: "npm:^5.7.6"
+    lottie-web: "npm:^5.12.2"
     microbundle-crl: "npm:^0.13.10"
     puppeteer: "npm:^19.4.1"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     rfdc: "npm:^1.3.0"
+    typescript: "npm:^5.4.2"
     vite: "npm:^4.4.7"
   peerDependencies:
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
@@ -10486,6 +10536,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^5.4.2":
+  version: 5.4.2
+  resolution: "typescript@npm:5.4.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 583ff68cafb0c076695f72d61df6feee71689568179fb0d3a4834dac343df6b6ed7cf7b6f6c801fa52d43cd1d324e2f2d8ae4497b09f9e6cfe3d80a6d6c9ca52
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@npm%3A^3.8.3#optional!builtin<compat/typescript>":
   version: 3.9.6
   resolution: "typescript@patch:typescript@npm%3A3.9.6#optional!builtin<compat/typescript>::version=3.9.6&hash=3bd3d3"
@@ -10493,6 +10553,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 5ed0225d5d4ed4755d966d29faed17f52c45b22bcb54008b7eaa55f3b88d02d5c04fb1be60a049d4e364c9f7ea0ef5283d298bab99d372c0e6e960841bfaa4d8
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^5.4.2#optional!builtin<compat/typescript>":
+  version: 5.4.2
+  resolution: "typescript@patch:typescript@npm%3A5.4.2#optional!builtin<compat/typescript>::version=5.4.2&hash=e012d7"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 22e2f213c3ffe5960c5eaec6c95c04e01858fed57a94be250746f540b935b2c18c3c3fc80d3ab65d28c0aba1eb76284557ba3bf521d28caee811c44ba2b648f9
   languageName: node
   linkType: hard
 
