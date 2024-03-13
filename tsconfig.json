@@ -1,0 +1,15 @@
+{
+  "extends": ["@tsconfig/strictest", "@tsconfig/vite-react/tsconfig.json"],
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "noEmit": true,
+    "checkJs": true,
+  },
+  "include": [
+    "src/**/*",
+  ],
+  "exclude": [
+    "**/*.test.js",
+    "**/node_modules"
+  ]
+}

@@ -24,10 +24,11 @@ declare module 'react-lottie-player' {
       onLoopComplete?: AnimationEventCallback
       onEnterFrame?: AnimationEventCallback
       onSegmentStart?: AnimationEventCallback
+      onLoad?: AnimationEventCallback
 
       /** Lottie `AnimationItem` Instance */
       ref?: React.Ref<AnimationItem | undefined>
-    } & ({ path?: string } | { animationData?: object })
+    } & ({ path?: string } | { animationData?: { ['default']: object } | object })
 
   const Lottie: React.FC<LottieProps>
 

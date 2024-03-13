@@ -48,8 +48,6 @@ const ScrollTest = memo(({ Component, useSubframes }) => {
   );
 });
 
-let logCounter = 0;
-
 const MainTest = memo(({ Component, useSubframes }) => {
   const [segmentFrom, setSegmentFrom] = useState(0);
   const [segmentTo, setSegmentTo] = useState(70);
@@ -61,11 +59,12 @@ const MainTest = memo(({ Component, useSubframes }) => {
   const [direction, setDirection] = useState(1);
   const segments = [segmentFrom, segmentTo];
   const lottieRef = useRef();
+  const logCounter = useRef(0);
 
   const [log, setLog] = useState([]);
   const addLog = (line) => {
-    setLog((existing) => [{ text: line, n: logCounter }, ...existing]);
-    logCounter += 1;
+    logCounter.current += 1;
+    setLog((existing) => [{ text: line, n: logCounter.current }, ...existing]);
   };
 
   function handleLoopTimesChange(e) {
@@ -234,6 +233,7 @@ function PathLoadTest({ Component, useSubframes }) {
 
       <p>
         Loaded with
+        {' '}
         <b>path</b>
         {' '}
         URL

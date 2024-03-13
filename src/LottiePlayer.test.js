@@ -1,4 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const execa = require('execa');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { toMatchImageSnapshot } = require('jest-image-snapshot');
 
 beforeAll(() => {
@@ -18,6 +20,7 @@ async function waitOnPort() {
       // eslint-disable-next-line no-await-in-loop
       await got(`${baseUrl}/`, { headers: { accept: 'text/html' } });
       return;
+    // eslint-disable-next-line unicorn/prefer-optional-catch-binding
     } catch (err) {
       // console.error(err.message);
       // retry
@@ -75,6 +78,6 @@ describe('lottie player screenshots', () => {
 
   afterAll(async () => {
     viteProcess?.kill?.('SIGINT');
-    await viteProcess.catch(() => {});
+    await viteProcess.catch(() => undefined);
   });
 });
