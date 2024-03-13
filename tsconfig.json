@@ -3,10 +3,7 @@
   "compilerOptions": {
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "noEmit": true,
-
-    // "noImplicitAny": false, // todo
-    "checkJs": true, // todo
-    // "allowJs": true, // todo
+    "checkJs": true,
   },
   "include": [
     "src/**/*",
