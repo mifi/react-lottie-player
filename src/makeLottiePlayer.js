@@ -1,6 +1,6 @@
 // @ts-check
 /// <reference types="./index" />
-import React, {
+import {
   memo, useRef, useEffect, useState, forwardRef, useCallback,
 } from 'react';
 import equal from 'fast-deep-equal/es6/react';
@@ -8,7 +8,7 @@ import equal from 'fast-deep-equal/es6/react';
 import clone from 'rfdc/default';
 
 const emptyObject = {};
-const noOp = () => {};
+const noOp = () => undefined;
 
 /**
  * @param {import('lottie-web').LottiePlayer} args
@@ -188,11 +188,7 @@ const makeLottiePlayer = ({ loadAnimation }) => {
           // This needs to be called after playSegments or it will not play backwards
           if (direction === -1) {
             // TODO What if more than one segment
-            let lastFrame;
-            // eslint-disable-next-line prefer-destructuring
-            if (typeof segments[1] === 'number') lastFrame = segments[1];
-            // eslint-disable-next-line prefer-destructuring
-            else lastFrame = segments[1][1];
+            const lastFrame = typeof segments[1] === 'number' ? segments[1] : segments[1][1];
             playReverse(lastFrame);
           }
         } else {
@@ -241,6 +237,7 @@ const makeLottiePlayer = ({ loadAnimation }) => {
     }, [getAnim, useSubframes]);
 
     return (
+      // eslint-disable-next-line react/jsx-filename-extension
       <div
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...propsFiltered}

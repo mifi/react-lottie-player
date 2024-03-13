@@ -1,5 +1,5 @@
-const execa = require('execa');
-const { toMatchImageSnapshot } = require('jest-image-snapshot');
+import execa from 'execa';
+import { toMatchImageSnapshot } from 'jest-image-snapshot';
 
 beforeAll(() => {
   expect.extend({ toMatchImageSnapshot });
@@ -18,6 +18,7 @@ async function waitOnPort() {
       // eslint-disable-next-line no-await-in-loop
       await got(`${baseUrl}/`, { headers: { accept: 'text/html' } });
       return;
+    // eslint-disable-next-line unicorn/prefer-optional-catch-binding
     } catch (err) {
       // console.error(err.message);
       // retry
@@ -75,6 +76,6 @@ describe('lottie player screenshots', () => {
 
   afterAll(async () => {
     viteProcess?.kill?.('SIGINT');
-    await viteProcess.catch(() => {});
+    await viteProcess.catch(() => undefined);
   });
 });
