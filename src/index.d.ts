@@ -12,7 +12,7 @@ declare module 'react-lottie-player' {
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   >> &
-    Partial<Pick<AnimationConfig<RendererType>, 'path', 'animationData', 'loop' | 'renderer' | 'rendererSettings' | 'audioFactory'>> & {
+    Partial<Pick<AnimationConfig<RendererType>, 'loop' | 'renderer' | 'rendererSettings' | 'audioFactory'>> & {
       play?: boolean
       goTo?: number
       speed?: number
