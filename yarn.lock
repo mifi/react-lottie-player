@@ -9211,7 +9211,7 @@ __metadata:
     typescript: "npm:~5.3.0"
     vite: "npm:^5.1.6"
   peerDependencies:
-    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
