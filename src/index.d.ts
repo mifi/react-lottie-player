@@ -28,7 +28,7 @@ declare module 'react-lottie-player' {
 
       /** Lottie `AnimationItem` Instance */
       ref?: React.Ref<AnimationItem | undefined>
-    } & ({ path?: string } | { animationData?: { ['default']: object } | object })
+    } & ({ path?: string } | { assetsPath?: string } | { animationData?: { ['default']: object } | object })
 
   const Lottie: React.FC<LottieProps>
 
