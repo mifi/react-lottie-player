@@ -52,12 +52,17 @@ const makeLottiePlayer = ({ loadAnimation }) => {
     let animationData;
     /** @type {string | undefined} */
     let path;
+    /** @type {string | undefined} */
+    let assetsPath;
 
     if ('animationData' in props) {
       ({ animationData, ...propsFiltered } = props);
     }
     if ('path' in props) {
       ({ path, ...propsFiltered } = props);
+    }
+    if ('assetsPath' in props) {
+      ({ assetsPath, ...propsFiltered } = props);
     }
 
     /** @type {React.MutableRefObject<HTMLDivElement | null>} */
@@ -122,6 +127,7 @@ const makeLottiePlayer = ({ loadAnimation }) => {
       const lottie = loadAnimation({
         animationData: parseAnimationData(),
         path,
+        assetsPath,
         container: animElementRef.current,
         renderer,
         loop: false,
@@ -141,7 +147,7 @@ const makeLottiePlayer = ({ loadAnimation }) => {
         getAnim().destroy();
         setLottieRefs(undefined);
       };
-    }, [loop, renderer, rendererSettings, animationData, path, audioFactory, setLottieRefs, getAnim]);
+    }, [loop, renderer, rendererSettings, animationData, path, assetsPath, audioFactory, setLottieRefs, getAnim]);
 
     useEffect(() => {
       getAnim().addEventListener('DOMLoaded', onLoad);
